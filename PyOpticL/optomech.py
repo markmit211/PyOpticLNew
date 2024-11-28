@@ -180,6 +180,38 @@ class example_component:
         part.Placement = obj.Placement
         obj.DrillPart = part
 
+class modular1:
+    '''
+    Modular bracket for modular doublepass aom connections
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True):
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+
+        obj.ViewObject.ShapeColor = mount_color
+        self.part_numbers = ['HCA3', 'PAF2-5A']
+        self.max_angle = 0
+        self.max_width = 1
+
+    def execute(self, obj):
+        mesh = _import_stl("modular1-union.stl", (0, -0, 0), (-0.5, 0, 19.2))
+        # mesh = _import_stl("RSP1-Step.stl", (180, -0, 90), (5.969, -0, 0))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+        part = Part.Shape()
+        # for i in [-1, 0, 1]:
+        #     part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch,
+        #                                       x=0, y=i*12.7, z=-20.65, dir=(1,0,0)))
+        part.Placement = obj.Placement
+        obj.DrillPart = part
 
 
 class baseplate_mount:
