@@ -208,12 +208,14 @@ class modular1:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        part = Part.Shape()
-        # for i in [-1, 0, 1]:
-        #     part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch,
-        #                                       x=0, y=i*12.7, z=-20.65, dir=(1,0,0)))
-        part.Placement = obj.Placement
-        obj.DrillPart = part
+        obj.DrillPart = mesh
+
+        # part = Part.Shape()
+        # # for i in [-1, 0, 1]:
+        # #     part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch,
+        # #                                       x=0, y=i*12.7, z=-20.65, dir=(1,0,0)))
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
 
 
 class baseplate_mount:
