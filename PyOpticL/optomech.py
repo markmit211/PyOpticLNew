@@ -208,7 +208,7 @@ class modular1:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        # mesh.recompute()
+        obj.recompute()
         part = Part.Shape()
         part.makeShapeFromMesh(obj.Mesh.Topology, 0.1)
         part.Placement = obj.Placement
