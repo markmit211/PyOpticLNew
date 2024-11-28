@@ -210,7 +210,7 @@ class modular1:
 
         # mesh.recompute()
         part = Part.Shape()
-        part.makeShapeFromMesh(mesh.Topology, 0.1)
+        part.makeShapeFromMesh(obj.Mesh.Topology, 0.1)
         obj.DrillPart = part
 
         # part = Part.Shape()
