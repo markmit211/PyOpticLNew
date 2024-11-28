@@ -202,7 +202,7 @@ class modular1:
         self.max_width = 1
 
     def execute(self, obj):
-        base_dz = 19.2 + obj.Offset.Value
+        base_dz = 19.2 - obj.Offset.Value
         mesh = _import_stl("modular1-union.stl", (0, -0, 0), (-0.5, 0, base_dz))
         # mesh = _import_stl("RSP1-Step.stl", (180, -0, 90), (5.969, -0, 0))
         mesh.Placement = obj.Mesh.Placement
