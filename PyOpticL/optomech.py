@@ -208,7 +208,10 @@ class modular1:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        obj.DrillPart = mesh
+        mesh.recompute()
+        part = Part.Shape()
+        part.makeShapeFromMesh(mesh.Mesh.Topology, 0.1)
+        obj.DrillPart = part
 
         # part = Part.Shape()
         # # for i in [-1, 0, 1]:
