@@ -186,6 +186,7 @@ class modular1:
 
     Args:
         drill (bool) : Whether baseplate mounting for this part should be drilled
+        z_offset (float) : How far down to offset the mount from the laser height (default flush)
     '''
     type = 'Mesh::FeaturePython'
     def __init__(self, obj, drill=True, z_offset = 0):
@@ -208,12 +209,12 @@ class modular1:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        obj.recompute()
-        part = Part.Shape()
-        part.makeShapeFromMesh(obj.Mesh.Topology, 0.1)
-        # obj.Shape = part
-        part.Placement = obj.Placement
-        obj.DrillPart = part
+        # obj.recompute()
+        # part = Part.Shape()
+        # part.makeShapeFromMesh(obj.Mesh.Topology, 0.1)
+        # # obj.Shape = part
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
 
         # part = Part.Shape()
         # # for i in [-1, 0, 1]:
