@@ -218,7 +218,7 @@ class modular1:
         bolt_depth = 6.5
         head_dia_14_20 = 10
         pocket_depth = bolt_depth+0.5*head_dia_14_20+2
-        part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth,
+        part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
                            x=-xPos, y=-yPos, z=-zPos, dir=(0, 0, -1),
                            fillet=5)
         part.Placement = obj.Placement
