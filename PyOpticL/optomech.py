@@ -189,13 +189,15 @@ class modular1:
         z_offset (float) : How far down to offset the mount from the laser height (default flush)
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, z_offset = 0):
+    def __init__(self, obj, drill=True, xPos = 0, yPos = 0, zPos = 0):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        obj.addProperty('App::PropertyLength','zPos').zPos = z_offset
+        obj.addProperty('App::PropertyLength','xPos').xPos = xPos
+        obj.addProperty('App::PropertyLength','yPos').yPos = yPos
+        obj.addProperty('App::PropertyLength','zPos').zPos = zPos
 
         obj.ViewObject.ShapeColor = mount_color
         self.part_numbers = ['HCA3', 'PAF2-5A']
@@ -209,11 +211,22 @@ class modular1:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        # obj.recompute()
+        xPos = obj.xPos.Value
+        yPos = obj.yPos.Value
+        zPos = obj.zPos.Value
+
+        bolt_depth = 6.5
+        head_dia_14_20 = 10
+        pocket_depth = bolt_depth+0.5*head_dia_14_20+2
+        part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth,
+                           x=xPos, y=yPos, z=zPos, dir=(0, 0, -1),
+                           fillet=5)
+        part.Placement = obj.Placement
+        obj.DrillPart = part
+
+        # # mesh.recompute()
         # part = Part.Shape()
-        # part.makeShapeFromMesh(obj.Mesh.Topology, 0.1)
-        # # obj.Shape = part
-        # part.Placement = obj.Placement
+        # part.makeShapeFromMesh(mesh.Mesh.Topology, 0.1)
         # obj.DrillPart = part
 
         # part = Part.Shape()
