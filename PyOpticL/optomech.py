@@ -195,7 +195,7 @@ class modular1:
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        obj.addProperty('App::PropertyLength','Offset').zPos = z_offset
+        obj.addProperty('App::PropertyLength','zPos').zPos = z_offset
 
         obj.ViewObject.ShapeColor = mount_color
         self.part_numbers = ['HCA3', 'PAF2-5A']
