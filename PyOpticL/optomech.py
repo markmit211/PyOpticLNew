@@ -219,13 +219,17 @@ class modular1:
         yPos = obj.yPos.Value
         zPos = obj.zPos.Value
 
+        inx = obj.inx.Value
+        iny = obj.iny.Value
+        inz = obj.inz.Value
+
         bolt_depth = 6.5
         head_dia_14_20 = 10
         pocket_depth = bolt_depth+0.5*head_dia_14_20+2
         part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
                            x=-xPos, y=-yPos, z=-zPos, dir=(0, 0, -1),
                            fillet=5)
-        # part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=-inx, y=-iny, z=-inz, dir=(-1,0,0)))
+        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=-inx, y=-iny, z=-inz, dir=(-1,0,0)))
         part.Placement = obj.Placement
         obj.DrillPart = part
 
