@@ -104,6 +104,14 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### modular1
+  
+    Modular bracket for modular doublepass aom connections  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        z_offset (float) : How far down to offset the mount from the laser height (default flush)  
+    
 ### baseplate_mount
   
     Mount holes for attaching to an optical table  
