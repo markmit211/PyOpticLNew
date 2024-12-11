@@ -219,10 +219,6 @@ class modular1:
         yPos = obj.yPos.Value
         zPos = obj.zPos.Value
 
-        inx = obj.inx.Value
-        iny = obj.iny.Value
-        inz = obj.inz.Value
-
         bolt_depth = 6.5
         head_dia_14_20 = 10
         pocket_depth = bolt_depth+0.5*head_dia_14_20+2
