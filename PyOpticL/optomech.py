@@ -189,7 +189,7 @@ class modular1:
         z_offset (float) : How far down to offset the mount from the laser height (default flush)
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, xPos = 0, yPos = 0, zPos = 0):
+    def __init__(self, obj, drill=True, xPos = 0, yPos = 0, zPos = 0, inx = 0, iny = 0, inz = 0):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
@@ -198,6 +198,10 @@ class modular1:
         obj.addProperty('App::PropertyLength','xPos').xPos = xPos
         obj.addProperty('App::PropertyLength','yPos').yPos = yPos
         obj.addProperty('App::PropertyLength','zPos').zPos = zPos
+        # Used for debugging
+        obj.addProperty('App::PropertyLength','inx').inx = inx
+        obj.addProperty('App::PropertyLength','iny').iny = iny
+        obj.addProperty('App::PropertyLength','inz').inz = inz
 
         obj.ViewObject.ShapeColor = mount_color
         self.part_numbers = ['HCA3', 'PAF2-5A']
@@ -221,6 +225,7 @@ class modular1:
         part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
                            x=-xPos, y=-yPos, z=-zPos, dir=(0, 0, -1),
                            fillet=5)
+        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=-inx, y=-iny, z=-inz, dir=(0,0,-1)))
         part.Placement = obj.Placement
         obj.DrillPart = part
 
