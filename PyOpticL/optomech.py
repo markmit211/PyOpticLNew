@@ -229,7 +229,7 @@ class modular1:
         part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
                            x=-xPos, y=-yPos, z=-zPos, dir=(0, 0, -1),
                            fillet=5)
-        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=-inx, y=-iny, z=-inz, dir=(0,0,-1)))
+        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=-inx, y=-iny, z=-inz, dir=(0,1,0)))
         part.Placement = obj.Placement
         obj.DrillPart = part
 
