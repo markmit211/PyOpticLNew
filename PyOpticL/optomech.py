@@ -188,7 +188,7 @@ class cage_mount_pair:
         drill (bool) : Whether baseplate mounting for this part should be drilled
         side_length (float) : The side length of the cube
     '''
-    type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    type = 'Mesh::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
     def __init__(self, obj, drill=True, side_len=15):
         # required for all object classes
         obj.Proxy = self
