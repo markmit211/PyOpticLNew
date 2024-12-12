@@ -189,14 +189,14 @@ class cage_mount_pair:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, side_len=15):
+    def __init__(self, obj, drill=True, spread=2.5*inch):
         # required for all object classes
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         # define any user-accessible properties here
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
-        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
+        obj.addProperty('App::PropertyLength', 'Spread').Spread = spread
 
         # additional parameters (ie color, constants, etc)
         obj.ViewObject.ShapeColor = adapter_color
@@ -209,11 +209,12 @@ class cage_mount_pair:
         # mesh.Placement = obj.Mesh.Placement
         # obj.Mesh = mesh
 
+        spread = obj.Spread.Value
         # Attempt 1 of Showing multiple mesh types:
         mesh_all = Mesh.Mesh()
         mesh1 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
         mesh_all.addMesh(mesh1)
-        mesh2 = _import_stl("CP33-Step.stl", (0, 0, 90), (-25, 0, 0))
+        mesh2 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, spread, 0))
         mesh_all.addMesh(mesh2)
 
         mesh_all.Placement = obj.Mesh.Placement
