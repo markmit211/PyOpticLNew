@@ -238,9 +238,9 @@ class modular1:
         part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=-(26.1), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
         # Leftmost modular component
-        part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
+        part = part.fuse(_custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
                            x=-(37.4/2+11-0.5), y=(26.1), z=-(12.7), dir=(0, 0,-1),
-                           fillet=5)
+                           fillet=5))
         part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=(26.1), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
 
