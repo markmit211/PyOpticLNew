@@ -1675,7 +1675,7 @@ class prism_mount_km100pm:
         
         part = _bounding_box(obj, 3, 4, min_offset=(17, 0, 0.63))
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
-                                     x=-14.02, y=12.63-11.9, z=17.5))
+                                     x=-14.02, y=12.63, z=17.5))
 
         # Changes made to increase the cutout for mount:
         # New Cutout for adjustment
