@@ -296,7 +296,7 @@ class cage_mount_pair:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, spread=2.5*inch, height=0):
+    def __init__(self, obj, drill=True, spread=2.5*inch, height=0, tolerance=5):
         # required for all object classes
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -306,7 +306,7 @@ class cage_mount_pair:
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Spread').Spread = spread
         obj.addProperty('App::PropertyLength', 'Height').Height = height
-
+        obj.addProperty('App::PropertyLength', 'Tolerance').Tolerance = tolerance
         # additional parameters (ie color, constants, etc)
         obj.ViewObject.ShapeColor = mount_color
         self.mount_bolt = bolt_8_32
@@ -325,6 +325,7 @@ class cage_mount_pair:
     def execute(self, obj):
         spread = obj.Spread.Value
         height = obj.Height.Value
+        tolerance = obj.Tolerance.Value
         # Showing multiple mesh types:
         mesh_all = Mesh.Mesh()
         mesh1 = _import_stl("CP33-Step.stl", (0, 0, 90), (0, 0, height)) # x originally -4.445
@@ -336,7 +337,7 @@ class cage_mount_pair:
         obj.Mesh = mesh_all
 
         # Drill Definition (Including Surface Mount Adapters):
-        part = _custom_box(dx=1.8*inch+1, dy=np.abs(spread-0.35*inch)+0.35*2*inch+1, dz=16, 
+        part = _custom_box(dx=1.8*inch+tolerance, dy=np.abs(spread-0.35*inch)+0.35*2*inch+tolerance, dz=16, 
                            x=0, y=-0.5*(spread+0.35*inch), z=height-(20.32+5/16*inch), fillet=5)
         part.Placement = obj.Placement
         obj.DrillPart = part
