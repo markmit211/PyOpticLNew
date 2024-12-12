@@ -1669,6 +1669,15 @@ class prism_mount_km100pm:
         part = _bounding_box(obj, 3, 4, min_offset=(17, 0, 0.63))
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
                                      x=-14.02, y=12.63, z=17.5))
+        
+        # Changes made to increase the cutout for mount:
+        # New Cutout for adjustment
+        part = part.fuse(_custom_box(dx=(20-1.146368), dy=(190-165), dz=(27-12.7), 
+                           x=-(38-20+(20-1.146368)/2), y=-((223-190)+(190-165)/2), z=-12.7, 
+                           dir=(0,0,-1), fillet=5))
+    
+        part.Placement = obj.Placement
+        obj.DrillPart = part
         part.Placement = obj.Placement
         obj.DrillPart = part
 
@@ -1930,10 +1939,6 @@ class isomet_1205c_on_km100pm:
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
-
-        # Used for added in drill section
-        obj.addProperty('App::PropertyPartShape', 'DrillPart')
-
         obj.addProperty('App::PropertyAngle', 'DiffractionAngle').DiffractionAngle = diffraction_angle
         obj.addProperty('App::PropertyInteger', 'ForwardDirection').ForwardDirection = forward_direction
         obj.addProperty('App::PropertyInteger', 'BackwardDirection').BackwardDirection = backward_direction
@@ -1956,13 +1961,6 @@ class isomet_1205c_on_km100pm:
         mesh = _import_stl("isomet_1205c.stl", (0, 0, 90), (0, 0, 0))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
-
-        # New Cutout for adjustment
-        part = _custom_box(dx=(20-1.146368), dy=(190-165), dz=(27-12.7), 
-                           x=-(38-20+(20-1.146368)/2), y=-((223-190)+(190-165)/2), z=-12.7, 
-                           dir=(0,0,-1), fillet=5)
-        part.Placement = obj.Placement
-        obj.DrillPart = part
 
 
 class isolator_670:
