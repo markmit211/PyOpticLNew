@@ -104,6 +104,14 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### cage_mount_pair
+  
+    Cage Mount Pair CP33 with baseplate adapter mounts  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### modular1
   
     Modular bracket for modular doublepass aom connections  
