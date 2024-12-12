@@ -1953,6 +1953,13 @@ class isomet_1205c_on_km100pm:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
+        # New Cutout for adjustment
+        part = _custom_box(dx=20-1.146368, dy=190-165, dz=27-12.7, 
+                           x=-(38-20+(20-1.146368)/2), y=-((223-190)+(190-165)/2), z=-12.7, 
+                           dir=(0,0,-1), fillet=5)
+        part.Placement = obj.Placement
+        obj.DrillPart = part
+
 
 class isolator_670:
     '''
