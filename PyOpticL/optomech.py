@@ -247,9 +247,9 @@ class cage_mount_pair:
 
         # Importing surface adapters:
         # Leftmost adapter:
-        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(1.397, 0, height-13.97), rot_offset=(0, 0, 90))
+        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, 0, height-13.97), rot_offset=(0, 0, 90))
         # Rightmost adapter:
-        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(1.397, -spread, height-13.97), rot_offset=(0, 0, 90))
+        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, -spread, height-13.97), rot_offset=(0, 0, 90))
 
     # this defines the component body and drilling
     def execute(self, obj):
@@ -261,9 +261,9 @@ class cage_mount_pair:
         height = obj.Height.Value
         # Attempt 1 of Showing multiple mesh types:
         mesh_all = Mesh.Mesh()
-        mesh1 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, height))
+        mesh1 = _import_stl("CP33-Step.stl", (0, 0, 90), (0, 0, height)) # x originally -4.445
         mesh_all.addMesh(mesh1)
-        mesh2 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, -spread, height))
+        mesh2 = _import_stl("CP33-Step.stl", (0, 0, 90), (0, -spread, height))
         mesh_all.addMesh(mesh2)
 
         mesh_all.Placement = obj.Mesh.Placement
