@@ -308,7 +308,7 @@ class cage_mount_pair:
         obj.addProperty('App::PropertyLength', 'Height').Height = height
 
         # additional parameters (ie color, constants, etc)
-        obj.ViewObject.ShapeColor = adapter_color
+        obj.ViewObject.ShapeColor = mount_color
         self.mount_bolt = bolt_8_32
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
@@ -319,17 +319,13 @@ class cage_mount_pair:
         _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, -0.025*inch-spread, height), rot_offset=(0, 0, 90))
 
         # Temporary Drill Test:
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90), spread=spread)
+        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90), spread=spread)
 
     # this defines the component body and drilling
     def execute(self, obj):
-        # mesh = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
-        # mesh.Placement = obj.Mesh.Placement
-        # obj.Mesh = mesh
-
         spread = obj.Spread.Value
         height = obj.Height.Value
-        # Attempt 1 of Showing multiple mesh types:
+        # Showing multiple mesh types:
         mesh_all = Mesh.Mesh()
         mesh1 = _import_stl("CP33-Step.stl", (0, 0, 90), (0, 0, height)) # x originally -4.445
         mesh_all.addMesh(mesh1)
@@ -340,26 +336,10 @@ class cage_mount_pair:
         obj.Mesh = mesh_all
 
         # Drill Definition (Including Surface Mount Adapters):
-        # part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
-        #                    x=-0.5*(spread+0.35*inch), y=0, z=height-(20.32+5/16*inch), fillet=5)
         part = _custom_box(dx=1.8*inch, dy=spread+0.35*3*inch, dz=16, 
                            x=0, y=-0.5*(spread+0.35*inch), z=height-(20.32+5/16*inch), fillet=5)
         part.Placement = obj.Placement
         obj.DrillPart = part
-
-
-        # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
-        #                    x=0, y=0, z=self.mount_dz)
-        # part = part.cut(_custom_cylinder(dia=self.mount_bolt['clear_dia'], dz=obj.Side_Length.Value,
-        #                                  head_dia=self.mount_bolt['head_dia'], head_dz=self.mount_bolt['head_dz'],
-        #                                  x=0, y=0, z=obj.Side_Length.Value+self.mount_dz))
-        # obj.Shape = part
-
-        # # drilling part definition
-        # part = _custom_cylinder(dia=self.mount_bolt['tap_dia'], dz=drill_depth,
-        #                         x=0, y=0, z=self.mount_dz)
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
 
 class modular1:
     '''
