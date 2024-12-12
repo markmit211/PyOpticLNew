@@ -218,7 +218,12 @@ class cage_mount_pair:
         mesh_all.addMesh(mesh2)
 
         mesh_all.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh_all        
+        obj.Mesh = mesh_all  
+
+        # Cutout for bottom of import:
+        part = _bounding_box(obj, self.drill_tolerance, 6)
+        part.Placement = obj.Placement
+        obj.DrillPart = part      
 
 
         # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
