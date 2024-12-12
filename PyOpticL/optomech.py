@@ -214,7 +214,7 @@ class cage_mount_pair:
         mesh_all = Mesh.Mesh()
         mesh1 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
         mesh_all.addMesh(mesh1)
-        mesh2 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, spread, 0))
+        mesh2 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, -spread, 0))
         mesh_all.addMesh(mesh2)
 
         mesh_all.Placement = obj.Mesh.Placement
