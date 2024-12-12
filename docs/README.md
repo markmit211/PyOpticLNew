@@ -104,6 +104,15 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### drill_test
+  
+    An example component class for reference on importing new components  
+    creates a simple cube which mounts using a single bolt  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### cage_mount_adapter
   
     Surface adapter for cage mount import.  
