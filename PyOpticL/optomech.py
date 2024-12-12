@@ -181,6 +181,56 @@ class example_component:
         obj.DrillPart = part
 
 
+class drill_test:
+    '''
+    An example component class for reference on importing new components
+    creates a simple cube which mounts using a single bolt
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, side_len=15, spread=0):
+        # required for all object classes
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        # define any user-accessible properties here
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
+        obj.addProperty('App::PropertyLength', 'Spread').Spread = spread
+
+        # additional parameters (ie color, constants, etc)
+        obj.ViewObject.ShapeColor = adapter_color
+        self.mount_bolt = bolt_8_32
+        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        spread = obj.Spread.Value
+        part = _custom_box(dx=100, dy=50, dz=25, 
+                           x=0, y=0, z=0, fillet=5)
+
+        obj.Shape = part
+
+
+
+        # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
+        #                    x=0, y=0, z=self.mount_dz)
+        # part = part.cut(_custom_cylinder(dia=self.mount_bolt['clear_dia'], dz=obj.Side_Length.Value,
+        #                                  head_dia=self.mount_bolt['head_dia'], head_dz=self.mount_bolt['head_dz'],
+        #                                  x=0, y=0, z=obj.Side_Length.Value+self.mount_dz))
+        # obj.Shape = part
+
+        # # drilling part definition
+        # part = _custom_cylinder(dia=self.mount_bolt['tap_dia'], dz=drill_depth,
+        #                         x=0, y=0, z=self.mount_dz)
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
+
+
 class cage_mount_adapter:
     '''
     Surface adapter for cage mount import.
@@ -268,6 +318,9 @@ class cage_mount_pair:
         # Rightmost adapter:
         _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, -0.025*inch-spread, height), rot_offset=(0, 0, 90))
 
+        # Temporary Drill Test:
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90), spread=spread)
+
     # this defines the component body and drilling
     def execute(self, obj):
         # mesh = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
@@ -285,6 +338,9 @@ class cage_mount_pair:
 
         mesh_all.Placement = obj.Mesh.Placement
         obj.Mesh = mesh_all
+
+        # Drill Definition (Including Surface Mount Adapters):
+
 
 
         # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
