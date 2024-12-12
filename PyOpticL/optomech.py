@@ -205,9 +205,20 @@ class cage_mount_pair:
 
     # this defines the component body and drilling
     def execute(self, obj):
-        mesh = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
-        mesh.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh
+        # mesh = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
+        # mesh.Placement = obj.Mesh.Placement
+        # obj.Mesh = mesh
+
+        # Attempt 1 of Showing multiple mesh types:
+        mesh_all = Mesh.Mesh()
+        mesh1 = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
+        mesh_all.addMesh(mesh1)
+        mesh2 = _import_stl("CP33-Step.stl", (0, 0, 90), (-25, 0, 0))
+        mesh_all.addMesh(mesh2)
+
+        mesh_all.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh_all        
+
 
         # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
         #                    x=0, y=0, z=self.mount_dz)
