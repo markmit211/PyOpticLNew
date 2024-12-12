@@ -1683,7 +1683,7 @@ class prism_mount_km100pm:
         #                    x=-(38-20+(20-1.146368)/2), y=-((223-190)+(190-165)/2), z=-12.7,
         #                    dir=(0,0,-1), fillet=5))
         part = part.fuse(_custom_box(dx=(190-165), dy=(20-1.146368), dz=(27-12.7),
-                           x=0, y=0, z=0,
+                           x=-30.25, y=8.423184-3.8, z=4.6,
                            dir=(0,0,-1), fillet=5))
     
         part.Placement = obj.Placement
