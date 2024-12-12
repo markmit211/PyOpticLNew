@@ -341,7 +341,8 @@ class cage_mount_pair:
 
         # Drill Definition (Including Surface Mount Adapters):
         part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
-                           x=-0.5*(spread+0.35*inch), y=0, z=height-(20.32+5/16*inch), fillet=5)
+                           x=-0.5*(spread+0.35*inch), y=0, z=height-(20.32+5/16*inch), fillet=5,
+                           dir=(0,0,-1))
         part.Placement = obj.Placement
         obj.DrillPart = part
 
