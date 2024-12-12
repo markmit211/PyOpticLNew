@@ -1930,12 +1930,13 @@ class isomet_1205c_on_km100pm:
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
-        obj.addProperty('App::PropertyAngle', 'DiffractionAngle').DiffractionAngle = diffraction_angle
-        obj.addProperty('App::PropertyInteger', 'ForwardDirection').ForwardDirection = forward_direction
-        obj.addProperty('App::PropertyInteger', 'BackwardDirection').BackwardDirection = backward_direction
 
         # Used for added in drill section
         obj.addProperty('App::PropertyPartShape', 'DrillPart')
+
+        obj.addProperty('App::PropertyAngle', 'DiffractionAngle').DiffractionAngle = diffraction_angle
+        obj.addProperty('App::PropertyInteger', 'ForwardDirection').ForwardDirection = forward_direction
+        obj.addProperty('App::PropertyInteger', 'BackwardDirection').BackwardDirection = backward_direction
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['ISOMET_1205C']
@@ -1957,7 +1958,7 @@ class isomet_1205c_on_km100pm:
         obj.Mesh = mesh
 
         # New Cutout for adjustment
-        part = _custom_box(dx=20-1.146368, dy=190-165, dz=27-12.7, 
+        part = _custom_box(dx=(20-1.146368), dy=(190-165), dz=(27-12.7), 
                            x=-(38-20+(20-1.146368)/2), y=-((223-190)+(190-165)/2), z=-12.7, 
                            dir=(0,0,-1), fillet=5)
         part.Placement = obj.Placement
