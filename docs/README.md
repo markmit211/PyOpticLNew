@@ -104,6 +104,14 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### cage_mount_adapter
+  
+    Surface adapter for cage mount import.  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### cage_mount_pair
   
     Cage Mount Pair CP33 with baseplate adapter mounts  
