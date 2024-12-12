@@ -208,10 +208,10 @@ class drill_test:
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
     # this defines the component body and drilling
-    def execute(self, obj):
+    def execute(self, obj): # z is simply dz+half of mount import height
         spread = obj.Spread.Value
-        part = _custom_box(dx=100, dy=50, dz=25, 
-                           x=0, y=0, z=0, fillet=5)
+        part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
+                           x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
 
         obj.Shape = part
 
