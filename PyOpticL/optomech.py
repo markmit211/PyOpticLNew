@@ -1934,6 +1934,9 @@ class isomet_1205c_on_km100pm:
         obj.addProperty('App::PropertyInteger', 'ForwardDirection').ForwardDirection = forward_direction
         obj.addProperty('App::PropertyInteger', 'BackwardDirection').BackwardDirection = backward_direction
 
+        # Used for added in drill section
+        obj.addProperty('App::PropertyPartShape', 'DrillPart')
+
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['ISOMET_1205C']
         self.diffraction_angle = diffraction_angle
