@@ -180,6 +180,45 @@ class example_component:
         part.Placement = obj.Placement
         obj.DrillPart = part
 
+
+class cage_mount_adapter:
+    '''
+    Surface adapter for cage mount import.
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, side_len=15):
+        # required for all object classes
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        # define any user-accessible properties here
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
+
+        # additional parameters (ie color, constants, etc)
+        obj.ViewObject.ShapeColor = adapter_color
+        self.mount_bolt = bolt_8_32
+        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
+                           x=0, y=0, z=self.mount_dz)
+        part = part.cut(_custom_cylinder(dia=self.mount_bolt['clear_dia'], dz=obj.Side_Length.Value,
+                                         head_dia=self.mount_bolt['head_dia'], head_dz=self.mount_bolt['head_dz'],
+                                         x=0, y=0, z=obj.Side_Length.Value+self.mount_dz))
+        obj.Shape = part
+
+        # drilling part definition
+        part = _custom_cylinder(dia=self.mount_bolt['tap_dia'], dz=drill_depth,
+                                x=0, y=0, z=self.mount_dz)
+        part.Placement = obj.Placement
+        obj.DrillPart = part
+
 class cage_mount_pair:
     '''
     Cage Mount Pair CP33 with baseplate adapter mounts
@@ -204,6 +243,12 @@ class cage_mount_pair:
         self.mount_bolt = bolt_8_32
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
+        # Importing surface adapters:
+        # Leftmost adapter:
+        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(1.397, 0, -13.97), rot_offset=(0, 0, 90*obj.Invert))
+        # Rightmost adapter:
+
+
     # this defines the component body and drilling
     def execute(self, obj):
         # mesh = _import_stl("CP33-Step.stl", (0, 0, 90), (-4.445, 0, 0))
@@ -220,17 +265,7 @@ class cage_mount_pair:
         mesh_all.addMesh(mesh2)
 
         mesh_all.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh_all  
-
-        # Cutout for bottom of import:
-        part = _bounding_box(obj, self.drill_tolerance, 6)
-        part.Placement = obj.Placement
-        obj.DrillPart = part      
-
-
-
-
-
+        obj.Mesh = mesh_all
 
 
         # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
