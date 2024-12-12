@@ -206,9 +206,9 @@ class cage_mount_adapter:
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
     # this defines the component body and drilling
-    def execute(self, obj):
+    def execute(self, obj): # z is simply dz+half of mount import height
         part = _custom_box(dx=0.75*inch, dy=1.8*inch, dz=5/16*inch,
-                           x=0, y=0, z=0, fillet=5)
+                           x=0, y=0, z=-(20.32+5/16*inch), fillet=5)
         # Cutout box to allow sliding on rails:
 
         obj.Shape = part
@@ -264,9 +264,9 @@ class cage_mount_pair:
 
         # Importing surface adapters:
         # Leftmost adapter:
-        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
+        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, 0.35*inch, height), rot_offset=(0, 0, 90))
         # Rightmost adapter:
-        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, -spread, height-13.97), rot_offset=(0, 0, 90))
+        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(0, 0.025*inch-spread, height), rot_offset=(0, 0, 90))
 
     # this defines the component body and drilling
     def execute(self, obj):
