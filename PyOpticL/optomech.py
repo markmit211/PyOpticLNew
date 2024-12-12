@@ -1679,7 +1679,7 @@ class prism_mount_km100pm:
 
         # Changes made to increase the cutout for mount:
         # New Cutout for adjustment
-        part = part.fuse(_custom_box(dx=(20-1.146368), dy=(190-165), dz=(27-12.7), 
+        part = part.fuse(_custom_box(dx=(20-1.146368), dy=(190-165), dz=(300), # Set back to 27-12.7
                            x=-(38-20+(20-1.146368)/2), y=-((223-190)+(190-165)/2), z=-24, # Set back to -12.7
                            dir=(0,0,-1), fillet=5))
     
