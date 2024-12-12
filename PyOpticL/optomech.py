@@ -189,19 +189,24 @@ class modular1:
         z_offset (float) : How far down to offset the mount from the laser height (default flush)
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, xPos = 0, yPos = 0, zPos = 0, inx = 0, iny = 0, inz = 0):
+    defaultSpread = 52.2
+    # def __init__(self, obj, drill=True, xPos = 0, yPos = 0, zPos = 0, inx = 0, iny = 0, inz = 0):
+    def __init__(self, obj, drill=True, Spread=defaultSpread):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        obj.addProperty('App::PropertyLength','xPos').xPos = xPos
-        obj.addProperty('App::PropertyLength','yPos').yPos = yPos
-        obj.addProperty('App::PropertyLength','zPos').zPos = zPos
-        # Used for debugging
-        obj.addProperty('App::PropertyLength','inx').inx = inx
-        obj.addProperty('App::PropertyLength','iny').iny = iny
-        obj.addProperty('App::PropertyLength','inz').inz = inz
+        # obj.addProperty('App::PropertyLength','xPos').xPos = xPos
+        # obj.addProperty('App::PropertyLength','yPos').yPos = yPos
+        # obj.addProperty('App::PropertyLength','zPos').zPos = zPos
+        # # Used for debugging
+        # obj.addProperty('App::PropertyLength','inx').inx = inx
+        # obj.addProperty('App::PropertyLength','iny').iny = iny
+        # obj.addProperty('App::PropertyLength','inz').inz = inz
+        
+        # Spread Parameter:
+        obj.addProperty('App::PropertyLength', 'Spread').Spread = Spread
 
         obj.ViewObject.ShapeColor = mount_color
         self.part_numbers = ['HCA3', 'PAF2-5A']
@@ -209,19 +214,20 @@ class modular1:
         self.max_width = 1
 
     def execute(self, obj):
-        base_dz = 19.2 - obj.zPos.Value
-        mesh = _import_stl("modular1-union.stl", (0, -0, 0), (-0.5, 0, base_dz))
-        # mesh = _import_stl("RSP1-Step.stl", (180, -0, 90), (5.969, -0, 0))
-        mesh.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh
+        # base_dz = 19.2 - obj.zPos.Value
+        # mesh = _import_stl("modular1-union.stl", (0, -0, 0), (-0.5, 0, base_dz))
+        # # mesh = _import_stl("RSP1-Step.stl", (180, -0, 90), (5.969, -0, 0))
+        # mesh.Placement = obj.Mesh.Placement
+        # obj.Mesh = mesh
 
-        xPos = obj.xPos.Value
-        yPos = obj.yPos.Value
-        zPos = obj.zPos.Value
+        # xPos = obj.xPos.Value
+        # yPos = obj.yPos.Value
+        # zPos = obj.zPos.Value
 
-        inx = obj.inx.Value
-        iny = obj.iny.Value
-        inz = obj.inz.Value
+        # inx = obj.inx.Value
+        # iny = obj.iny.Value
+        # inz = obj.inz.Value
+        spread = obj.Spread.Value
 
         bolt_depth = 6.5
         head_dia_14_20 = 10
@@ -233,15 +239,15 @@ class modular1:
 
         # Rightmost modular component
         part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
-                           x=-(37.4/2+11-0.5), y=-(26.1), z=-(12.7), dir=(0, 0,-1),
+                           x=-(37.4/2+11-0.5), y=-(spread/2), z=-(12.7), dir=(0, 0,-1),
                            fillet=5)
-        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=-(26.1), z=-(12.7+14.5/2), dir=(-1,0,0)))
+        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=-(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
         # Leftmost modular component
         part = part.fuse(_custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
-                           x=-(37.4/2+11-0.5), y=(26.1), z=-(12.7), dir=(0, 0,-1),
+                           x=-(37.4/2+11-0.5), y=(spread/2), z=-(12.7), dir=(0, 0,-1),
                            fillet=5))
-        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=(26.1), z=-(12.7+14.5/2), dir=(-1,0,0)))
+        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
 
 
