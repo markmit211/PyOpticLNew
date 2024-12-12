@@ -245,7 +245,7 @@ class cage_mount_pair:
 
         # Importing surface adapters:
         # Leftmost adapter:
-        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(1.397, 0, -13.97), rot_offset=(0, 0, 90*obj.Invert))
+        _add_linked_object(obj, "cage_mount_adapter", cage_mount_adapter, pos_offset=(1.397, 0, -13.97), rot_offset=(0, 0, 90))
         # Rightmost adapter:
 
 
