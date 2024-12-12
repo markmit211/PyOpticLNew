@@ -1666,10 +1666,17 @@ class prism_mount_km100pm:
         obj.Mesh = mesh
 
         #part = _bounding_box(obj, 3, 4, max_offset=(-18, -38, 0), z_tol=True)
-        part = _bounding_box(obj, 3, 4, min_offset=(17, 0, 0.63))
-        part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
-                                     x=-14.02, y=12.63, z=17.5))
+
+
+        # # Original:
+        # part = _bounding_box(obj, 3, 4, min_offset=(17, 0, 0.63))
+        # part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+        #                              x=-14.02, y=12.63, z=17.5))
         
+        # part = _bounding_box(obj, 3, 4, min_offset=(17, 0, 0.63))
+        part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+                                     x=-14.02, y=12.63, z=17.5)
+
         # Changes made to increase the cutout for mount:
         # New Cutout for adjustment
         part = part.fuse(_custom_box(dx=(20-1.146368), dy=(190-165), dz=(27-12.7), 
@@ -1678,8 +1685,8 @@ class prism_mount_km100pm:
     
         part.Placement = obj.Placement
         obj.DrillPart = part
-        part.Placement = obj.Placement
-        obj.DrillPart = part
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
 
 class laser_box:
 
