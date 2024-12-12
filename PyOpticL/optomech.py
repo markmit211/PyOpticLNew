@@ -207,18 +207,35 @@ class cage_mount_adapter:
 
     # this defines the component body and drilling
     def execute(self, obj):
-        part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
+        part = _custom_box(dx=0.75*inch, dy=1.8*inch, dz=5/16*inch,
                            x=0, y=0, z=self.mount_dz)
-        part = part.cut(_custom_cylinder(dia=self.mount_bolt['clear_dia'], dz=obj.Side_Length.Value,
-                                         head_dia=self.mount_bolt['head_dia'], head_dz=self.mount_bolt['head_dz'],
-                                         x=0, y=0, z=obj.Side_Length.Value+self.mount_dz))
-        obj.Shape = part
+        # Cutout box to allow sliding on rails:
 
-        # drilling part definition
-        part = _custom_cylinder(dia=self.mount_bolt['tap_dia'], dz=drill_depth,
-                                x=0, y=0, z=self.mount_dz)
-        part.Placement = obj.Placement
-        obj.DrillPart = part
+        obj.Shape = part
+        # Mounting hole cutouts:
+        # Bottom mounting hole:
+
+        # Two Side mounting holes (screws)
+
+        # Two smaller pin mounting holes (metal rods)
+
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
+
+
+
+        # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
+        #                    x=0, y=0, z=self.mount_dz)
+        # part = part.cut(_custom_cylinder(dia=self.mount_bolt['clear_dia'], dz=obj.Side_Length.Value,
+        #                                  head_dia=self.mount_bolt['head_dia'], head_dz=self.mount_bolt['head_dz'],
+        #                                  x=0, y=0, z=obj.Side_Length.Value+self.mount_dz))
+        # obj.Shape = part
+
+        # # drilling part definition
+        # part = _custom_cylinder(dia=self.mount_bolt['tap_dia'], dz=drill_depth,
+        #                         x=0, y=0, z=self.mount_dz)
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
 
 class cage_mount_pair:
     '''
