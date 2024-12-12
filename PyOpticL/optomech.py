@@ -197,6 +197,7 @@ class cage_mount_adapter:
 
         # define any user-accessible properties here
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
 
         # additional parameters (ie color, constants, etc)
@@ -235,6 +236,7 @@ class cage_mount_pair:
 
         # define any user-accessible properties here
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Spread').Spread = spread
         obj.addProperty('App::PropertyLength', 'Height').Height = height
 
