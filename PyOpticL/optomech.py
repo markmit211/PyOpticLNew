@@ -1682,7 +1682,7 @@ class prism_mount_km100pm:
         # part = part.fuse(_custom_box(dx=(20-1.146368), dy=(190-165), dz=(27-12.7),
         #                    x=-(38-20+(20-1.146368)/2), y=-((223-190)+(190-165)/2), z=-12.7,
         #                    dir=(0,0,-1), fillet=5))
-        part = part.fuse(_custom_box(dx=(100), dy=(100), dz=(100),
+        part = part.fuse(_custom_box(dx=(100), dy=(50), dz=(10),
                            x=(38-20+(20-1.146368)/2), y=((223-190)+(190-165)/2), z=-12.7,
                            dir=(0,0,-1), fillet=5))
     
