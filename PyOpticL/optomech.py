@@ -264,13 +264,13 @@ class cage_mount_adapter:
 
 
         part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-                                          x=-4.5, y=7, z=top_of_plate_z+10, dir=(0,0,-1)))
+                                          x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
         part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-                                          x=-4.5, y=-7, z=top_of_plate_z+10, dir=(0,0,-1)))
+                                          x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
         part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=7, z=top_of_plate_z+10, dir=(0,0,-1)))
+                                          x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
         part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=-7, z=top_of_plate_z+10, dir=(0,0,-1)))
+                                          x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
 
         obj.Shape = part
         # Mounting hole cutouts:
