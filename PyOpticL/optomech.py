@@ -271,53 +271,15 @@ class cage_mount_adapter:
             part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
                                           x=-4.5, y=7*i, z=-20.32, dir=(0,0,-1)))
 
-
-        # part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-        #                                   x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
-        # part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-        #                                   x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
-        # part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-        #                                   x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
-        # part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-        #                                   x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
-
         obj.Shape = part
         # Mounting hole cutouts:
         part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
                                           x=-4.5, y=7, z=top_of_plate_z, dir=(0,0,-1))
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
                                           x=-4.5, y=-7, z=top_of_plate_z, dir=(0,0,-1)))
-        part = part.fuse(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=7, z=top_of_plate_z, dir=(0,0,-1)))
-        part = part.fuse(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=-7, z=top_of_plate_z, dir=(0,0,-1)))
 
         part.Placement = obj.Placement
         obj.DrillPart = part
-
-        # Bottom mounting hole:
-
-        # Two Side mounting holes (screws)
-
-        # Two smaller pin mounting holes (metal rods)
-
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
-
-
-
-        # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
-        #                    x=0, y=0, z=self.mount_dz)
-        # part = part.cut(_custom_cylinder(dia=self.mount_bolt['clear_dia'], dz=obj.Side_Length.Value,
-        #                                  head_dia=self.mount_bolt['head_dia'], head_dz=self.mount_bolt['head_dz'],
-        #                                  x=0, y=0, z=obj.Side_Length.Value+self.mount_dz))
-        # obj.Shape = part
-
-        # # drilling part definition
-        # part = _custom_cylinder(dia=self.mount_bolt['tap_dia'], dz=drill_depth,
-        #                         x=0, y=0, z=self.mount_dz)
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
 
 class cage_mount_pair:
     '''
