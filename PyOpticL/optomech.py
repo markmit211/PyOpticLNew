@@ -257,18 +257,19 @@ class cage_mount_adapter:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
+        top_of_plate_z = -(20.32+5/16*inch)
         part = _custom_box(dx=0.75*inch, dy=1.8*inch, dz=5/16*inch,
-                           x=0, y=0, z=-(20.32+5/16*inch), fillet=5)
+                           x=0, y=0, z=top_of_plate_z, fillet=5)
         # Cutout box to allow sliding on rails:
 
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-                                          x=-4.5, y=7, z=-12.7, dir=(0,0,-1)))
+                                          x=-4.5, y=7, z=top_of_plate_z, dir=(0,0,-1)))
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-                                          x=-4.5, y=-7, z=-12.7, dir=(0,0,-1)))
+                                          x=-4.5, y=-7, z=top_of_plate_z, dir=(0,0,-1)))
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=7, z=-12.7, dir=(0,0,-1)))
+                                          x=-4.5, y=7, z=top_of_plate_z, dir=(0,0,-1)))
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=-7, z=-12.7, dir=(0,0,-1)))
+                                          x=-4.5, y=-7, z=top_of_plate_z, dir=(0,0,-1)))
 
         obj.Shape = part
         # Mounting hole cutouts:
