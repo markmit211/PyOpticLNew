@@ -260,20 +260,26 @@ class cage_mount_adapter:
         top_of_plate_z = -(20.32+5/16*inch)
         part = _custom_box(dx=0.75*inch, dy=1.8*inch, dz=5/16*inch,
                            x=0, y=0, z=top_of_plate_z, fillet=5)
-        part = part.fuse(_custom_box(dx=0.35*inch, dy=1.8*inch, dz=1, 
-                                     x=-0.35*inch/2-0.635008, y=0, z=-12.7, dir=(0,0,-1)))
         # Cutout box to allow sliding on rails:
         part = part.cut(_custom_box(dx=0.35*inch, dy=1.8*inch, dz=1, 
                                      x=-0.35*inch/2-0.635008, y=0, z=-20.32, dir=(0,0,-1)))
+        
+        # Cutouts for screws:
+        for i in [-1,1]:
+            part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
+                                          x=-4.5, y=7*i, z=-20.32, dir=(0,0,-1)))
+            part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
+                                          x=-4.5, y=7*i, z=-20.32, dir=(0,0,-1)))
 
-        part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-                                          x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
-        part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
-                                          x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
-        part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
-        part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
-                                          x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
+
+        # part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
+        #                                   x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
+        # part = part.cut(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch+1, 
+        #                                   x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
+        # part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
+        #                                   x=-4.5, y=7, z=-20.32, dir=(0,0,-1)))
+        # part = part.cut(_custom_cylinder(dia=bolt_8_32['head_dia'], dz=bolt_8_32['head_dz'], 
+        #                                   x=-4.5, y=-7, z=-20.32, dir=(0,0,-1)))
 
         obj.Shape = part
         # Mounting hole cutouts:
