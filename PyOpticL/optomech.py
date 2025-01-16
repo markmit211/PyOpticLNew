@@ -265,9 +265,9 @@ class cage_mount_adapter:
         # #                                       x=0, y=i*12.7, z=-20.65, dir=(1,0,0)))
         cage_width = 0.35*inch
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch, 
-                                          x=-cage_width/2, y=7, z=0, dir=(0,0,-1)))
+                                          x=-cage_width/2, y=7, z=-12.7, dir=(0,0,-1)))
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch, 
-                                          x=-cage_width/2, y=-7, z=0, dir=(0,0,-1)))
+                                          x=-cage_width/2, y=-7, z=-12.7, dir=(0,0,-1)))
 
         obj.Shape = part
         # Mounting hole cutouts:
