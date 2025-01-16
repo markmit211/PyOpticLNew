@@ -261,8 +261,15 @@ class cage_mount_adapter:
                            x=0, y=0, z=-(20.32+5/16*inch), fillet=5)
         # Cutout box to allow sliding on rails:
 
+        #     part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch,
+        # #                                       x=0, y=i*12.7, z=-20.65, dir=(1,0,0)))
+
+        part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch, 
+                                          x=0, y=0, z=0, dir=(1,0,0)))
+
         obj.Shape = part
         # Mounting hole cutouts:
+
         # Bottom mounting hole:
 
         # Two Side mounting holes (screws)
