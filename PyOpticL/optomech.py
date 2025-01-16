@@ -261,7 +261,7 @@ class cage_mount_adapter:
         part = _custom_box(dx=0.75*inch, dy=1.8*inch, dz=5/16*inch,
                            x=0, y=0, z=top_of_plate_z, fillet=5)
         part = part.fuse(_custom_box(dx=0.35*inch, dy=1.8*inch, dz=1, 
-                                     x=0, y=0, z=0))
+                                     x=0, y=0, z=-12.7))
         # Cutout box to allow sliding on rails:
 
 
