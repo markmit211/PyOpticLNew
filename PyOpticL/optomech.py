@@ -251,18 +251,20 @@ class butterfly_laser_on_koheron_driver:
         # define any user-accessible properties here
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Height').Height = height
         # additional parameters (ie color, constants, etc)
         obj.ViewObject.ShapeColor = mount_color
         self.mount_bolt = bolt_8_32
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
         # Temporary Drill Test:
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
 
     # this defines the component body and drilling
     def execute(self, obj):
+        height = obj.Height.Value
         # Driver mesh import:
-        mesh = _import_stl("koheron_CTL200_V5.stl", (0, -0, 0), (-71.85, 37.53, -5.035-1.5))
+        mesh = _import_stl("koheron_CTL200_V5.stl", (0, -0, 0), (-71.85, 37.53, -5.035-1.5+height))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
