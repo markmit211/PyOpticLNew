@@ -191,7 +191,7 @@ class drill_test:
         side_length (float) : The side length of the cube
     '''
     type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, side_len=15, spread=0):
+    def __init__(self, obj, drill=True, side_len=15):
         # required for all object classes
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -200,7 +200,6 @@ class drill_test:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
-        obj.addProperty('App::PropertyLength', 'Spread').Spread = spread
 
         # additional parameters (ie color, constants, etc)
         obj.ViewObject.ShapeColor = adapter_color
@@ -209,9 +208,14 @@ class drill_test:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
-        spread = obj.Spread.Value
-        part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
-                           x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
+        # spread = obj.Spread.Value
+        # part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
+        #                    x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
+
+        # obj.Shape = part
+
+        part = _custom_box(dx=80, dy=80, dz=15, 
+                           x=0, y=0, z=-12.7, fillet=5)
 
         obj.Shape = part
 
@@ -239,7 +243,7 @@ class butterfly_laser_on_koheron_driver:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, spread=2.5*inch, height=0, tolerance=5):
+    def __init__(self, obj, drill=True, height=0):
         # required for all object classes
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -252,6 +256,9 @@ class butterfly_laser_on_koheron_driver:
         self.mount_bolt = bolt_8_32
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
+        # Temporary Drill Test:
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
+
     # this defines the component body and drilling
     def execute(self, obj):
         # Driver mesh import:
@@ -263,6 +270,7 @@ class butterfly_laser_on_koheron_driver:
 
 
         # Drill Defintion:
+        
 
 
 class cage_mount_adapter:
