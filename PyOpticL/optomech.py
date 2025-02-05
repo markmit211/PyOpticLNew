@@ -258,7 +258,7 @@ class butterfly_laser_on_koheron_driver:
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
         # Temporary Drill Test:
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
+        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
 
     # this defines the component body and drilling
     def execute(self, obj):
@@ -269,11 +269,15 @@ class butterfly_laser_on_koheron_driver:
         obj.Mesh = mesh
 
         # Butterfly laser diode definition:
+        part = _custom_box(dx=30, dy=15.3, dz=9.4, x=0, y=0, z=0, fillet=0)
+        obj.Shape = part
 
-
-        # Drill Defintion:
+        # Drill Defintion for Bounding Box:
         part = _custom_box(dx=80, dy=80, dz=15+12.7, 
                            x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
+
+        # Drill Definition for Screw Holes:
+
         part.Placement = obj.Placement
         obj.DrillPart = part
         
