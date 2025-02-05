@@ -272,6 +272,13 @@ class butterfly_laser_on_koheron_driver:
 
 
         # Drill Defintion:
+        part = _custom_box(dx=80, dy=80, dz=15+12.7, 
+                           x=0, y=35, z=-12.7+height-0.347321, fillet=5)
+
+        # part = _custom_box(dx=1.8*inch+tolerance, dy=np.abs(spread-0.35*inch)+0.35*2*inch+tolerance, dz=16, 
+        #                    x=0, y=-0.5*(spread+0.35*inch), z=height-(20.32+5/16*inch), fillet=5)
+        part.Placement = obj.Placement
+        obj.DrillPart = part
         
 
 
