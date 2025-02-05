@@ -215,7 +215,7 @@ class drill_test:
         # obj.Shape = part
 
         part = _custom_box(dx=80, dy=80, dz=15, 
-                           x=-40, y=0, z=-12.7, fillet=5)
+                           x=0, y=-40, z=-12.7, fillet=5)
 
         obj.Shape = part
 
