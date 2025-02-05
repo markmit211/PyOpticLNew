@@ -255,7 +255,7 @@ class butterfly_laser_on_koheron_driver:
     # this defines the component body and drilling
     def execute(self, obj):
         # Driver mesh import:
-        mesh = _import_stl("koheron_CTL200_V5.stl", (0, -0, 0), (-71.85, 37.53, -5.035))
+        mesh = _import_stl("koheron_CTL200_V5.stl", (0, -0, 0), (-71.85, 37.53, -5.035-1.5))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
