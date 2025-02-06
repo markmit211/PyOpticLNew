@@ -113,6 +113,14 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### butterfly_laser
+  
+    Butterfly laser shape to be placed on driver  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### butterfly_laser_on_koheron_driver
   
     Butterfly laser on Koheron CTL200_V5 Driver  
