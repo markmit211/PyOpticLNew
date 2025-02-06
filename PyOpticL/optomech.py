@@ -260,6 +260,8 @@ class isolator_850:
         # Temporary Drill Test:
         # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
 
+        _add_linked_object(obj, "skate_mount", skate_mount, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
+
     # this defines the component body and drilling
     def execute(self, obj):
         height = obj.Height.Value
