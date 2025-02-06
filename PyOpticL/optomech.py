@@ -264,7 +264,7 @@ class isolator_850:
     def execute(self, obj):
         height = obj.Height.Value
         # Driver mesh import:
-        mesh = _import_stl("IO-3D-850-VLP-Step.stl", (180, 0, 0), (0, 0, 0+height))
+        mesh = _import_stl("IO-3D-850-VLP-Step.stl", (0, 0, 180), (0, 0, 0+height))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
