@@ -234,6 +234,37 @@ class drill_test:
         # part.Placement = obj.Placement
         # obj.DrillPart = part
 
+
+class butterfly_laser:
+    '''
+    Butterfly laser shape to be placed on driver
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, side_len=15):
+        # required for all object classes
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        # define any user-accessible properties here
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
+
+        # additional parameters (ie color, constants, etc)
+        obj.ViewObject.ShapeColor = adapter_color
+        self.mount_bolt = bolt_8_32
+        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        # Butterfly laser diode definition:
+        part = _custom_box(dx=30, dy=15.3, dz=9.4, x=0, y=0, z=0, fillet=0)
+        obj.Shape = part
+
 class butterfly_laser_on_koheron_driver:
     '''
     Butterfly laser on Koheron CTL200_V5 Driver
@@ -259,6 +290,9 @@ class butterfly_laser_on_koheron_driver:
 
         # Temporary Drill Test:
         # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
+
+        # Butterfly Laser Shape:
+        _add_linked_object(obj, "butterfly_laser", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
 
     # this defines the component body and drilling
     def execute(self, obj):
