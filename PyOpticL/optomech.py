@@ -234,6 +234,52 @@ class drill_test:
         # part.Placement = obj.Placement
         # obj.DrillPart = part
 
+class isolator_850:
+    '''
+    Isolator 850 On Mount
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Mesh::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, height=0):
+        # required for all object classes
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        # define any user-accessible properties here
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Height').Height = height
+        # additional parameters (ie color, constants, etc)
+        obj.ViewObject.ShapeColor = mount_color
+        self.mount_bolt = bolt_8_32
+        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+        # Temporary Drill Test:
+        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        height = obj.Height.Value
+        # Driver mesh import:
+        mesh = _import_stl("IO-3D-850-VLP-Step.stl", (90, 0, 90), (0.076, 0, -0+height))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+        # Drill Defintion for Bounding Boxes:
+        # Isolator Bounding Box:
+        # part = _custom_box(dx=80, dy=80, dz=15+12.7, 
+        #                    x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
+        # Skate Mount Bounding Box:
+
+
+        # Drill Definition for Screw Holes:
+
+        
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
 
 class butterfly_laser:
     '''
@@ -311,6 +357,7 @@ class butterfly_laser_on_koheron_driver:
                            x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
 
         # Drill Definition for Screw Holes:
+
 
         part.Placement = obj.Placement
         obj.DrillPart = part
