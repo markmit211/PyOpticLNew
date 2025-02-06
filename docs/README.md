@@ -113,6 +113,14 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### isolator_850
+  
+    Isolator 850 On Mount  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### butterfly_laser
   
     Butterfly laser shape to be placed on driver  
