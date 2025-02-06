@@ -262,7 +262,7 @@ class butterfly_laser:
     # this defines the component body and drilling
     def execute(self, obj):
         # Butterfly laser diode definition:
-        part = _custom_box(dx=15.3, dy=30, dz=9.4, x=0, y=0, z=-5.04732, fillet=0)
+        part = _custom_box(dx=15.3, dy=30, dz=9.4, x=0, y=-16.35, z=-5.04732, fillet=0)
         obj.Shape = part
 
 class butterfly_laser_on_koheron_driver:
