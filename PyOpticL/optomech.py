@@ -208,11 +208,11 @@ class drill_test:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
-        # spread = obj.Spread.Value
-        # part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
-        #                    x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
+        spread = obj.Spread.Value
+        part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
+                           x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
 
-        # obj.Shape = part
+        obj.Shape = part
 
 
 class isolator_850:
