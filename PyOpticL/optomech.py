@@ -218,12 +218,12 @@ class drill_test:
         #                    x=0, y=35, z=-12.7, fillet=5)
         offset = -13.047321
         length = 50
-        p1x =  -17.95
-        p1y = 0.025
-        p2x = p1x-50
-        p2y = -24.98
-        p3x = p2x
-        p3y = 25.02
+        p1y =  -17.95
+        p1x = 0.025
+        p2y = p1x-50
+        p2x = -24.98
+        p3y = p2x
+        p3x = 25.02
         # part 1
         part = _custom_cylinder(dia=2.5, dz=length, x=p1x, y=p1y, z=offset)
         part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p1x, y=p1y, z=offset-6))
