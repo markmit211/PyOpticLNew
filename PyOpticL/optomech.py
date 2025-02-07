@@ -242,26 +242,26 @@ class isolator_850:
         drill (bool) : Whether baseplate mounting for this part should be drilled
         side_length (float) : The side length of the cube
     '''
-    type = 'Mesh::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0):
-        # required for all object classes
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
+        adapter_args.setdefault("mount_hole_dy", 45)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
-        # define any user-accessible properties here
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Height').Height = height
-        # additional parameters (ie color, constants, etc)
-        obj.ViewObject.ShapeColor = mount_color
-        self.mount_bolt = bolt_8_32
-        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+        obj.ViewObject.ShapeColor = misc_color
+        self.part_numbers = ['IO-3D-850-VLP']
+        self.transmission = True
+        self.max_angle = 10
+        self.max_width = 5
 
         # Temporary Drill Test:
         # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
 
-        # _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, -15.456, height-17.145), rot_offset=(0, 0, 0))
-        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(15.456, 0, height-17.145), rot_offset=(0, 0, 0))
+        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(15.456, 0, height-17.145), rot_offset=(0, 0, 0), **adapter_args)
 
     # this defines the component body and drilling
     def execute(self, obj):
