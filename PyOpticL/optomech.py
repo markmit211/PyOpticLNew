@@ -367,7 +367,7 @@ class butterfly_laser_on_koheron_driver:
 
         # Drill Definition for Screw Holes:
 
-        offset = -13.047321
+        offset = -12.7
         length = 50
         p1x =  -17.95
         p1y = 0.025
