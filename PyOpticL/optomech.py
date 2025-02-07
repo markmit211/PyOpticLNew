@@ -225,14 +225,14 @@ class drill_test:
         p3x = p2x
         p3y = 25.02
         # part 1
-        part = _custom_cylinder(dia=2.5, dz=length, x=p1y, y=p1x, z=offset)
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p1y, y=p1x, z=offset-6))
+        part = _custom_cylinder(dia=2.5, dz=length, x=-p1y, y=-p1x, z=offset)
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p1y, y=-p1x, z=offset-6))
         # part 2
-        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p2y, y=p2x, z=offset))
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p2y, y=p2x, z=offset-6))
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=-p2y, y=-p2x, z=offset))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p2y, y=-p2x, z=offset-6))
         # part 3
-        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p3y, y=p3x, z=offset))
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p3y, y=p3x, z=offset-6))
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=-p3y, y=-p3x, z=offset))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p3y, y=-p3x, z=offset-6))
 
         obj.Shape = part
 
