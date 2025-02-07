@@ -214,42 +214,6 @@ class drill_test:
 
         # obj.Shape = part
 
-        # part = _custom_box(dx=80, dy=80, dz=15+12.7, 
-        #                    x=0, y=35, z=-12.7, fillet=5)
-        offset = -13.047321
-        length = 50
-        p1x =  -17.95
-        p1y = 0.025
-        p2x = p1x-50
-        p2y = -24.98
-        p3x = p2x
-        p3y = 25.02
-        # part 1
-        part = _custom_cylinder(dia=2.5, dz=length, x=-p1y, y=-p1x, z=offset)
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p1y, y=-p1x, z=offset-6))
-        # part 2
-        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=-p2y, y=-p2x, z=offset))
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p2y, y=-p2x, z=offset-6))
-        # part 3
-        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=-p3y, y=-p3x, z=offset))
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p3y, y=-p3x, z=offset-6))
-
-        obj.Shape = part
-
-
-
-        # part = _custom_box(dx=obj.Side_Length.Value, dy=obj.Side_Length.Value, dz=obj.Side_Length.Value,
-        #                    x=0, y=0, z=self.mount_dz)
-        # part = part.cut(_custom_cylinder(dia=self.mount_bolt['clear_dia'], dz=obj.Side_Length.Value,
-        #                                  head_dia=self.mount_bolt['head_dia'], head_dz=self.mount_bolt['head_dz'],
-        #                                  x=0, y=0, z=obj.Side_Length.Value+self.mount_dz))
-        # obj.Shape = part
-
-        # # drilling part definition
-        # part = _custom_cylinder(dia=self.mount_bolt['tap_dia'], dz=drill_depth,
-        #                         x=0, y=0, z=self.mount_dz)
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
 
 class isolator_850:
     '''
@@ -274,9 +238,6 @@ class isolator_850:
         self.transmission = True
         self.max_angle = 10
         self.max_width = 5
-
-        # Temporary Drill Test:
-        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
 
         _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(15.456, 0, height-17.145), rot_offset=(0, 0, 0), **adapter_args)
 
@@ -344,9 +305,6 @@ class butterfly_laser_on_koheron_driver:
         self.mount_bolt = bolt_8_32
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
-        # Temporary Drill Test:
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
-
         # Butterfly Laser Shape:
         _add_linked_object(obj, "butterfly_laser", butterfly_laser, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
 
@@ -358,16 +316,12 @@ class butterfly_laser_on_koheron_driver:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        # Butterfly laser diode definition:
-        # Included in above imports (has its own class above)
-
         # Drill Defintion for Bounding Box:
         part = _custom_box(dx=80, dy=80, dz=15+12.7, 
                            x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
 
         # Drill Definition for Screw Holes:
-
-        offset = -12.7
+        z_offset = -12.7
         length = 50
         p1x =  -17.95
         p1y = 0.025
@@ -376,15 +330,14 @@ class butterfly_laser_on_koheron_driver:
         p3x = p2x
         p3y = 25.02
         # part 1
-        part = _custom_cylinder(dia=2.5, dz=length, x=p1x, y=p1y, z=offset+height)
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p1x, y=p1y, z=offset-6+height))
+        part = _custom_cylinder(dia=2.5, dz=length, x=p1x, y=p1y, z=z_offset+height)
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p1x, y=p1y, z=z_offset-6+height))
         # part 2
-        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p2x, y=p2y, z=offset+height))
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p2x, y=p2y, z=offset-6+height))
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p2x, y=p2y, z=z_offset+height))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p2x, y=p2y, z=z_offset-6+height))
         # part 3
-        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p3x, y=p3y, z=offset+height))
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p3x, y=p3y, z=offset-6+height))
-
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p3x, y=p3y, z=z_offset+height))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p3x, y=p3y, z=z_offset-6+height))
 
         part.Placement = obj.Placement
         obj.DrillPart = part
