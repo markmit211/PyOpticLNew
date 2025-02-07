@@ -320,6 +320,7 @@ class butterfly_laser:
         part = part.fuse(_custom_cylinder(dia=5.4, dz=3, x=0, y=1.35, z=0, dir=(0,-1,0)))
         obj.Shape = part
 
+
 class butterfly_laser_on_koheron_driver:
     '''
     Butterfly laser on Koheron CTL200_V5 Driver
@@ -365,6 +366,23 @@ class butterfly_laser_on_koheron_driver:
                            x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
 
         # Drill Definition for Screw Holes:
+        offset = -13.047321
+        length = 50
+        p1x =  -17.95
+        p1y = 0.025
+        p2x = p1x-50
+        p2y = -24.98
+        p3x = p2x
+        p3y = 25.02
+        # part 1
+        part = _custom_cylinder(dia=2.5, dz=length, x=-p1y, y=-p1x, z=offset)
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p1y, y=-p1x, z=offset-6))
+        # part 2
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=-p2y, y=-p2x, z=offset))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p2y, y=-p2x, z=offset-6))
+        # part 3
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=-p3y, y=-p3x, z=offset))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=-p3y, y=-p3x, z=offset-6))
 
 
         part.Placement = obj.Placement
