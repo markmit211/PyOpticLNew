@@ -214,8 +214,9 @@ class drill_test:
 
         # obj.Shape = part
 
-        part = _custom_box(dx=80, dy=80, dz=15+12.7, 
-                           x=0, y=35, z=-12.7, fillet=5)
+        # part = _custom_box(dx=80, dy=80, dz=15+12.7, 
+        #                    x=0, y=35, z=-12.7, fillet=5)
+        part = _custom_cylinder(dia=2.5, dz=30, x=0, y=0, z=0)
 
         obj.Shape = part
 
@@ -339,7 +340,7 @@ class butterfly_laser_on_koheron_driver:
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
         # Temporary Drill Test:
-        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height-0.347321), rot_offset=(0, 0, 90))
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
 
         # Butterfly Laser Shape:
         _add_linked_object(obj, "butterfly_laser", butterfly_laser, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
