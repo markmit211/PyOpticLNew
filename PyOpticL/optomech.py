@@ -216,10 +216,23 @@ class drill_test:
 
         # part = _custom_box(dx=80, dy=80, dz=15+12.7, 
         #                    x=0, y=35, z=-12.7, fillet=5)
-        offset = -10
+        offset = -13.047321
         length = 50
-        part = _custom_cylinder(dia=2.5, dz=length, x=0, y=0, z=offset)
-        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=0, y=0, z=offset-6))
+        p1x =  -17.95
+        p1y = 0.025
+        p2x = p1x-50
+        p2y = -24.98
+        p3x = p2x
+        p3y = 25.02
+        # part 1
+        part = _custom_cylinder(dia=2.5, dz=length, x=p1x, y=p1y, z=offset)
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p1x, y=p1y, z=offset-6))
+        # part 2
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p2x, y=p2y, z=offset))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p2x, y=p2y, z=offset-6))
+        # part 3
+        part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p3x, y=p3y, z=offset))
+        part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p3x, y=p3y, z=offset-6))
 
         obj.Shape = part
 
@@ -275,18 +288,6 @@ class isolator_850:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        # Drill Defintion for Bounding Boxes:
-        # Isolator Bounding Box:
-        # part = _custom_box(dx=80, dy=80, dz=15+12.7, 
-        #                    x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
-        # Skate Mount Bounding Box:
-
-
-        # Drill Definition for Screw Holes:
-
-        
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
 
 class butterfly_laser:
     '''
