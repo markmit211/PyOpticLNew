@@ -244,7 +244,7 @@ class isolator_850:
     '''
     type = 'Mesh::FeaturePython'
     def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
-        adapter_args.setdefault("mount_hole_dy", 45)
+        adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
