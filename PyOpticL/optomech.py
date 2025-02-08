@@ -240,7 +240,7 @@ class isolator_895:
         self.max_angle = 10
         self.max_width = 5
 
-        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(15.456, 0, height-17.145), rot_offset=(0, 0, 0), **adapter_args)
+        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402), rot_offset=(0, 0, 0), **adapter_args)
 
     # this defines the component body and drilling
     def execute(self, obj):
