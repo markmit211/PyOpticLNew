@@ -215,6 +215,43 @@ class drill_test:
         obj.Shape = part
 
 
+
+class isolator_895:
+    '''
+    Isolator 895 On Mount
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
+        adapter_args.setdefault("mount_hole_dy", 30)
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Height').Height = height
+
+        obj.ViewObject.ShapeColor = misc_color
+        self.part_numbers = ['IO-3D-850-VLP']
+        self.transmission = True
+        self.max_angle = 10
+        self.max_width = 5
+
+        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(15.456, 0, height-17.145), rot_offset=(0, 0, 0), **adapter_args)
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        height = obj.Height.Value
+        # Driver mesh import:
+        mesh = _import_stl("I8953D_Isolator.stl", (0, 0, 180), (0, 0, 0+height))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+
+
 class isolator_850:
     '''
     Isolator 850 On Mount
