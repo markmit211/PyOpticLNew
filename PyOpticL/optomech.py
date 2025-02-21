@@ -285,7 +285,7 @@ class eval_miniTA:
         obj.Mesh = mesh
 
         # Drill Defintion for Bounding Box:
-        part = _custom_box(dy=75+10+2.5, dx=96.25+10, dz=25.4*2, y=6.792+5.8435-1.25, x=34, z=-13.1+height, fillet=5)
+        part = _custom_box(dy=75+10+2.5, dx=96.25+10, dz=25.4*2, y=6.792+5.8435-1.25, x=-34, z=-13.1+height, fillet=5)
 
         # # Drill Definition for Screw Holes:
         # z_offset = -12.7
