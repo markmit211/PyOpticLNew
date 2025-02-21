@@ -294,24 +294,14 @@ class eval_miniTA:
         # Drill Defintion for Bounding Box:
         part = _custom_box(dy=75+10+2.5, dx=96.25+10, dz=25.4*2, y=6.792+5.8435-1.25, x=-34, z=-13.1+height, fillet=5)
 
-        # # Drill Definition for Screw Holes:
-        # z_offset = -12.7
-        # length = 50
-        # p1x =  -17.95
-        # p1y = 0.025
-        # p2x = p1x-50
-        # p2y = -24.98
-        # p3x = p2x
-        # p3y = 25.02
-        # # part 1
-        # part = _custom_cylinder(dia=2.5, dz=length, x=p1x, y=p1y, z=z_offset+height)
-        # part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p1x, y=p1y, z=z_offset-6+height))
-        # # part 2
-        # part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p2x, y=p2y, z=z_offset+height))
-        # part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p2x, y=p2y, z=z_offset-6+height))
-        # # part 3
-        # part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p3x, y=p3y, z=z_offset+height))
-        # part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p3x, y=p3y, z=z_offset-6+height))
+        # Drill Definition for Screw Holes:
+        part = _custom_cylinder(dia=2.7, dz=2*inch, x=9.12, y=15.75, z=-13.1+height)
+
+        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12, y=-15.75, z=-13.1+height))
+
+        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12-50, y=-15.75, z=-13.1+height))
+
+        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12-50, y=15.75, z=-13.1+height))
 
         part.Placement = obj.Placement
         obj.DrillPart = part
