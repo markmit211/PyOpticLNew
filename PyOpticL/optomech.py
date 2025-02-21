@@ -216,6 +216,10 @@ class drill_test:
 
         part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12, y=-15.75, z=-13.1))
 
+        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12-50, y=-15.75, z=-13.1))
+
+        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12-50, y=15.75, z=-13.1))
+
         obj.Shape = part
 
 class miniTA:
