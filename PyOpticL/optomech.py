@@ -208,9 +208,10 @@ class drill_test:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
-        spread = obj.Spread.Value
-        part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
-                           x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
+        # spread = obj.Spread.Value
+        # part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
+        #                    x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
+        part = _custom_box(dx=96.25, dy=75, dz=25.4*2, x=0, y=0, z=0, fillet=5)
 
         obj.Shape = part
 
@@ -271,6 +272,9 @@ class eval_miniTA:
 
         # miniTA Laser Shape:
         # _add_linked_object(obj, "miniTA", butterfly_laser, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
+
+        # Temporary Drill Test:
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
 
     # this defines the component body and drilling
     def execute(self, obj):
