@@ -211,7 +211,7 @@ class drill_test:
         # spread = obj.Spread.Value
         # part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
         #                    x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
-        part = _custom_box(dx=96.25, dy=75, dz=25.4*2, x=0, y=0, z=0, fillet=5)
+        part = _custom_box(dx=75, dy=96.25, dz=25.4*2, x=0, y=-34, z=-13.1, fillet=5)
 
         obj.Shape = part
 
