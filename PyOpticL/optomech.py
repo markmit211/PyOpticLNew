@@ -278,10 +278,10 @@ class eval_miniTA:
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
         # miniTA Laser Shape:
-        # _add_linked_object(obj, "miniTA", butterfly_laser, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
+        _add_linked_object(obj, "miniTA", miniTA, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
 
-        # Temporary Drill Test:
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 0))
+        # # Temporary Drill Test:
+        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0, 0, height), rot_offset=(0, 0, 0))
 
     # this defines the component body and drilling
     def execute(self, obj):
