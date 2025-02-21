@@ -214,6 +214,98 @@ class drill_test:
 
         obj.Shape = part
 
+class miniTA:
+    '''
+    Butterfly laser shape to be placed on driver
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, side_len=15):
+        # required for all object classes
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        # define any user-accessible properties here
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
+
+        # additional parameters (ie color, constants, etc)
+        obj.ViewObject.ShapeColor = adapter_color
+        self.mount_bolt = bolt_8_32
+        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        # Butterfly laser diode definition:
+        part = _custom_box(dx=15.3, dy=30, dz=9.4, x=0, y=16.35, z=-5.04732, fillet=0)
+        part = part.fuse(_custom_cylinder(dia=5.4, dz=3, x=0, y=1.35, z=0, dir=(0,-1,0)))
+        obj.Shape = part
+
+
+class eval_miniTA:
+    '''
+    Evaluation board for miniTA
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Mesh::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, height=0):
+        # required for all object classes
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        # define any user-accessible properties here
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Height').Height = height
+        # additional parameters (ie color, constants, etc)
+        obj.ViewObject.ShapeColor = mount_color
+        self.mount_bolt = bolt_8_32
+        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+        # miniTA Laser Shape:
+        # _add_linked_object(obj, "miniTA", butterfly_laser, pos_offset=(0, 0, height), rot_offset=(0, 0, 90))
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        height = obj.Height.Value
+        # Driver mesh import:
+        mesh = _import_stl("EVAL_miniTA.stl", (0, -0, 0), (-9.507, -2.519, -56.51-1.5+height))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+        # # Drill Defintion for Bounding Box:
+        # part = _custom_box(dx=80, dy=80, dz=15+12.7, 
+        #                    x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
+
+        # # Drill Definition for Screw Holes:
+        # z_offset = -12.7
+        # length = 50
+        # p1x =  -17.95
+        # p1y = 0.025
+        # p2x = p1x-50
+        # p2y = -24.98
+        # p3x = p2x
+        # p3y = 25.02
+        # # part 1
+        # part = _custom_cylinder(dia=2.5, dz=length, x=p1x, y=p1y, z=z_offset+height)
+        # part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p1x, y=p1y, z=z_offset-6+height))
+        # # part 2
+        # part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p2x, y=p2y, z=z_offset+height))
+        # part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p2x, y=p2y, z=z_offset-6+height))
+        # # part 3
+        # part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p3x, y=p3y, z=z_offset+height))
+        # part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p3x, y=p3y, z=z_offset-6+height))
+
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
+
 
 
 class isolator_895:
