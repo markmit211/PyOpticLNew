@@ -276,7 +276,7 @@ class eval_miniTA:
     def execute(self, obj):
         height = obj.Height.Value
         # Driver mesh import:
-        mesh = _import_stl("EVAL_miniTA.stl", (0, -0, 0), (-9.507, -2.519, -56.51-1.5+height))
+        mesh = _import_stl("EVAL_miniTA.stl", (0, -0, 0), (-9.507, -2.519, -56.51-1.5-1.04+height))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
