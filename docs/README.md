@@ -113,6 +113,22 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### miniTA
+  
+    Butterfly laser shape to be placed on driver  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
+### eval_miniTA
+  
+    Evaluation board for miniTA  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### isolator_895
   
     Isolator 895 On Mount  
