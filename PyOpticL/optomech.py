@@ -284,9 +284,8 @@ class eval_miniTA:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        # # Drill Defintion for Bounding Box:
-        # part = _custom_box(dx=80, dy=80, dz=15+12.7, 
-        #                    x=0-35, y=35-35, z=-12.7+height-0.347321, fillet=5)
+        # Drill Defintion for Bounding Box:
+        part = _custom_box(dx=75+10+2.5, dy=96.25+10, dz=25.4*2, x=6.792+5.8435-1.25, y=34, z=-13.1+height, fillet=5)
 
         # # Drill Definition for Screw Holes:
         # z_offset = -12.7
@@ -307,8 +306,8 @@ class eval_miniTA:
         # part = part.fuse(_custom_cylinder(dia=2.5, dz=length, x=p3x, y=p3y, z=z_offset+height))
         # part = part.fuse(_custom_cylinder(dia=5, dz=length-6, x=p3x, y=p3y, z=z_offset-6+height))
 
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
+        part.Placement = obj.Placement
+        obj.DrillPart = part
 
 
 
