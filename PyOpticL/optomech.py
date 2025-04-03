@@ -255,6 +255,10 @@ class mirror_mount_m05:
         part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
                                 x=-6.96, y=0, z=-layout.inch/2)
 
+        for i in [-3.4, -9.47]:
+            part = part.fuse(_custom_cylinder(dia=1.6, dz=2.2,
+                                              x=i, y=0, z=-layout.inch/2))
+
         part.Placement = obj.Placement
         obj.DrillPart = part
 
