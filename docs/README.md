@@ -113,7 +113,7 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
-### newport_m05_mirror_mount
+### mirror_mount_m05
   
     New Mirror mount: Newport m05  
   
