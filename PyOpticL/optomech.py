@@ -248,7 +248,7 @@ class newport_m05_mirror_mount:
             _add_linked_object(obj, "Lower Thumbscrew", thumbscrew_hkts_5_64, pos_offset=(-15.03, -8.89, -8.89))
 
     def execute(self, obj):
-        mesh = _import_stl("newport_m05.stl", (0, 0, 0), (-10.5, -67.78, -18.6))
+        mesh = _import_stl("newport_m05.stl", (0, 0, 0), (0, 0, -18.6+21))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
