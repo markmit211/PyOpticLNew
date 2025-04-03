@@ -113,6 +113,15 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### newport_m05_mirror_mount
+  
+    New Mirror mount: Newport m05  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        mirror (bool) : Whether to add a mirror component to the mount  
+        thumbscrews (bool): Whether or not to add two HKTS 5-64 adjusters  
+    
 ### miniTA
   
     Butterfly laser shape to be placed on driver  
