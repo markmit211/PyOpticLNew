@@ -222,7 +222,7 @@ class drill_test:
 
         obj.Shape = part
 
-class newport_m05_mirror_mount:
+class mirror_mount_m05:
     '''
     New Mirror mount: Newport m05
 
@@ -253,7 +253,7 @@ class newport_m05_mirror_mount:
         obj.Mesh = mesh
 
         part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
-                                x=-8.017, y=0, z=-layout.inch/2)
+                                x=-5.53, y=0, z=-layout.inch/2)
 
         part.Placement = obj.Placement
         obj.DrillPart = part
