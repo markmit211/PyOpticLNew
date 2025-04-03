@@ -244,9 +244,8 @@ class mirror_mount_m05:
         self.part_numbers = ['NEWPORT-M05']
 
         if thumbscrews:
-            _add_linked_object(obj, "Upper Thumbscrew", thumbscrew_hkts_5_64, pos_offset=(-15.03, 8.89, 8.89))
-            _add_linked_object(obj, "Lower Thumbscrew", thumbscrew_hkts_5_64, pos_offset=(-15.03, -8.89, -8.89))
-            _add_linked_object(obj, "Lower Thumbscrew", thumbscrew_hkts_5_64, pos_offset=(0, -12, 0))
+            _add_linked_object(obj, "Upper Thumbscrew", thumbscrew_hkts_5_64, pos_offset=(-17.954, 9.14, 9.14))
+            _add_linked_object(obj, "Lower Thumbscrew", thumbscrew_hkts_5_64, pos_offset=(-17.954, -9.14, -9.14))
 
     def execute(self, obj):
         mesh = _import_stl("newport_m05.stl", (0, 0, 0), (0, 2.7840105, -18.6+21))
