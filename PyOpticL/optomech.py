@@ -304,8 +304,6 @@ class fiberport_12mm:
 
     # this defines the component body and drilling
     def execute(self, obj):
-        x_test = obj.x_test.Value
-        y_test = obj.y_test.Value
 
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm.stl", (90, 270, 0), (-34.05, -12.596, 14.896))
@@ -348,8 +346,6 @@ class fiberport_12mm_sidemount:
 
     # this defines the component body and drilling
     def execute(self, obj):
-        x_test = obj.x_test.Value
-        y_test = obj.y_test.Value
 
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm_sidemount.stl", (0, 90, 90), (19.05, 26.8965, -0.0275))
