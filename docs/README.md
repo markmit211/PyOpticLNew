@@ -113,6 +113,22 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### fiberport_12mm
+  
+    12mm Fiberport Mount with Drill only in top face of mount  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
+### fiberport_12mm_sidemount
+  
+    12mm Fiberport Mount with drill in top and side of baseplate  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### mirror_mount_m05
   
     New Mirror mount: Newport m05  
