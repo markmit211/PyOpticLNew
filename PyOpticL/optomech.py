@@ -256,16 +256,17 @@ class modified_mount_for_km100pm:
         obj.setEditorMode('Placement', 2)
 
     def execute(self, obj):
+        aom_beam_height = 2 # Height of beam above Main Body [mm]
         dx = obj.ArmThickness.Value
         dy = 47.5
-        dz = 16.92
         stage_dx = obj.StageLength.Value
         stage_dz = obj.StageThickness.Value
+        dz = stage_dz + 6.98 + aom_beam_height # Original 16.92
         # Main Body (Attached to Mount)
         part = _custom_box(dx=dx, dy=dy, dz=dz-obj.ArmClearance.Value,
                            x=0, y=0, z=obj.ArmClearance.Value)
         # Stage Body (Attached to AOM)
-        part = part.fuse(_custom_box(dx=stage_dx, dy=dy, dz=stage_dz,
+        part = part.fuse(_custom_box(dx=stage_dx, dy=dy, dz=stage_dz-obj.ArmClearance.Value,
                                      x=0, y=0, z=stage_dz, dir=(1, 0, -1)))
         # Slot Cutouts
         for ddy in [15.2, 38.1]:
@@ -279,7 +280,7 @@ class modified_mount_for_km100pm:
         for ddy in [0, -11.42, -26.65, -38.07]:
             part = part.cut(_custom_cylinder(dia=bolt_4_40['clear_dia'], dz=stage_dz, head_dia=bolt_4_40['head_dia'],
                                         head_dz=obj.CounterDepth.Value, countersink=obj.Countersink,
-                                        x=11.25, y=18.9+ddy, z=-stage_dz, dir=(0,0,1)))
+                                        x=11.25, y=18.9+ddy, z=0, dir=(0,0,1)))
         part.translate(App.Vector(dx/2, 25.4-15.2+obj.SlotLength.Value/2, -6.4))
         part = part.fuse(part)
         obj.Shape = part
