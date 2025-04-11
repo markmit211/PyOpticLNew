@@ -286,7 +286,7 @@ class fiberport_12mm:
         port (int) : Blank if no port, 1 if long port, 2 if short port
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
+    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0, x_test=0, y_test=0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -294,6 +294,8 @@ class fiberport_12mm:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'port').port = port
+        obj.addProperty('App::PropertyLength', 'x_test').x_test = x_test
+        obj.addProperty('App::PropertyLength', 'y_test').y_test = y_test
         
 
         obj.ViewObject.ShapeColor = misc_color
@@ -305,11 +307,22 @@ class fiberport_12mm:
 
     # this defines the component body and drilling
     def execute(self, obj):
+        x_test = obj.x_test.Value
+        y_test = obj.y_test.Value
 
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm.stl", (90, 270, 0), (-34.05, -12.596, 14.896))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
+
+        part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+                                x=x_test, y=y_test, z=-layout.inch/2)
+
+        part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+                                x=x_test, y=y_test-26.67, z=-layout.inch/2))
+
+        part.Placement = obj.Placement
+        obj.DrillPart = part
 
 class fiberport_12mm_sidemount:
     '''
@@ -320,7 +333,7 @@ class fiberport_12mm_sidemount:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
+    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0, x_test=0, y_test=0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -328,6 +341,8 @@ class fiberport_12mm_sidemount:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'port').port = port
+        obj.addProperty('App::PropertyLength', 'x_test').x_test = x_test
+        obj.addProperty('App::PropertyLength', 'y_test').y_test = y_test
 
         obj.ViewObject.ShapeColor = misc_color
 
@@ -338,11 +353,22 @@ class fiberport_12mm_sidemount:
 
     # this defines the component body and drilling
     def execute(self, obj):
+        x_test = obj.x_test.Value
+        y_test = obj.y_test.Value
 
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm_sidemount.stl", (0, 90, 90), (19.05, 26.8965, -0.0275))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
+
+        part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+                                x=x_test, y=y_test, z=-layout.inch/2)
+
+        part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+                                x=x_test, y=y_test-26.67, z=-layout.inch/2))
+
+        part.Placement = obj.Placement
+        obj.DrillPart = part
 
 class mirror_mount_m05:
     '''
