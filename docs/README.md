@@ -113,6 +113,21 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### modified_mount_for_km100pm
+  
+    Adapter for mounting isomet AOMs to km100pm kinematic mount (Low Profile)  
+  
+    Args:  
+        mount_offset (float[3]) : The offset position of where the adapter mounts to the component  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        slot_length (float) : The length of the slots used for mounting to the km100pm  
+        countersink (bool) : Whether to drill a countersink instead of a counterbore for the AOM mount holes  
+        counter_depth (float) : The depth of the countersink/bores for the AOM mount holes  
+        arm_thickness (float) : The thickness of the arm the mounts to the km100PM  
+        arm_clearance (float) : The distance between the bottom of the adapter arm and the bottom of the km100pm  
+        stage_thickness (float) : The thickness of the stage that mounts to the AOM  
+        stage_length (float) : The length of the stage that mounts to the AOM  
+    
 ### fiber_long
   
     Fiber input to fiberport  
