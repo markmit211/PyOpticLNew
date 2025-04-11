@@ -113,7 +113,7 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
-### modified_isomet_1205c_on_km100pm
+### isomet_1205c_on_km100pm_low_profile
   
     Isomet 1205C AOM on KM100PM Mount  
   
