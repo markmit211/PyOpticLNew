@@ -136,6 +136,7 @@
     Args:  
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
+        port (int) : Blank if no port, 1 if long port, 2 if short port  
     
 ### fiberport_12mm_sidemount
   
