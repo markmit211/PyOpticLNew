@@ -222,6 +222,52 @@ class drill_test:
 
         obj.Shape = part
 
+class modified_isomet_1205c_on_km100pm:
+    '''
+    Isomet 1205C AOM on KM100PM Mount
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        diffraction_angle (float) : The diffraction angle (in degrees) of the AOM
+        forward_direction (integer) : The direction of diffraction on forward pass (1=right, -1=left)
+        backward_direction (integer) : The direction of diffraction on backward pass (1=right, -1=left)
+
+    Sub-Parts:
+        prism_mount_km100pm (mount_args)
+        mount_for_km100pm (adapter_args)
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, diffraction_angle=degrees(0.026), forward_direction=1, backward_direction=1, mount_args=dict(), adapter_args=dict(), x_off=0, y_off=0, z_off=0):
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('App::PropertyAngle', 'DiffractionAngle').DiffractionAngle = diffraction_angle
+        obj.addProperty('App::PropertyInteger', 'ForwardDirection').ForwardDirection = forward_direction
+        obj.addProperty('App::PropertyInteger', 'BackwardDirection').BackwardDirection = backward_direction
+        obj.addProperty('App::PropertyLength', 'x_off').x_off = x_off
+        obj.addProperty('App::PropertyLength', 'y_off').y_off = y_off
+        obj.addProperty('App::PropertyLength', 'z_off').z_off = z_off
+
+        obj.ViewObject.ShapeColor = misc_color
+        self.part_numbers = ['ISOMET_1205C']
+        self.diffraction_angle = diffraction_angle
+        self.diffraction_dir = (forward_direction, backward_direction)
+        self.transmission = True
+        self.max_angle = 10
+        self.max_width = 5
+
+        # TODO fix these parts to remove arbitrary translations
+        _add_linked_object(obj, "Mount KM100PM", prism_mount_km100pm,
+                           pos_offset=(-15.25, -20.15, -17.50), **mount_args)
+        _add_linked_object(obj, "Adapter Bracket", modified_mount_for_km100pm,
+                           pos_offset=(-15.25+x_off, -20.15+y_off, -17.50+z_off), **adapter_args)
+
+    def execute(self, obj):
+        mesh = _import_stl("isomet_1205c.stl", (0, 0, 90), (0, 0, 0))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
 class modified_mount_for_km100pm:
     '''
     Adapter for mounting isomet AOMs to km100pm kinematic mount (Low Profile)
@@ -256,12 +302,11 @@ class modified_mount_for_km100pm:
         obj.setEditorMode('Placement', 2)
 
     def execute(self, obj):
-        aom_beam_height = 2 # Height of beam above Main Body [mm]
         dx = obj.ArmThickness.Value
         dy = 47.5
         stage_dx = obj.StageLength.Value
         stage_dz = obj.StageThickness.Value
-        dz = stage_dz + 6.98 + aom_beam_height # Original 16.92
+        dz = stage_dz + 8.21 # Original 16.92
         # Main Body (Attached to Mount)
         part = _custom_box(dx=dx, dy=dy, dz=dz-obj.ArmClearance.Value,
                            x=0, y=0, z=obj.ArmClearance.Value)
