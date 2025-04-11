@@ -283,17 +283,25 @@ class fiberport_12mm:
     Args:
         drill (bool) : Whether baseplate mounting for this part should be drilled
         side_length (float) : The side length of the cube
+        port (int) : Blank if no port, 1 if long port, 2 if short port
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict()):
+    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'port').port = port
+        
 
         obj.ViewObject.ShapeColor = misc_color
+
+        if port == 1:
+            _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
+        elif port ==2:
+            _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
 
     # this defines the component body and drilling
     def execute(self, obj):
@@ -312,15 +320,21 @@ class fiberport_12mm_sidemount:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict()):
+    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'port').port = port
 
         obj.ViewObject.ShapeColor = misc_color
+
+        if port == 1:
+            _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
+        elif port ==2:
+            _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
 
     # this defines the component body and drilling
     def execute(self, obj):
