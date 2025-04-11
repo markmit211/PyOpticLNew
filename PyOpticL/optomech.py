@@ -259,12 +259,12 @@ class modified_isomet_1205c_on_km100pm:
 
         # TODO fix these parts to remove arbitrary translations
         _add_linked_object(obj, "Mount KM100PM", prism_mount_km100pm,
-                           pos_offset=(-15.25, -20.15, -17.50), **mount_args)
+                           pos_offset=(-15.25, -20.15, -17.50+5.06), **mount_args)
         _add_linked_object(obj, "Adapter Bracket", modified_mount_for_km100pm,
-                           pos_offset=(-15.25, -20.15, -17.50), **adapter_args)
+                           pos_offset=(-15.25, -20.15, -17.50+5.06), **adapter_args)
 
     def execute(self, obj):
-        mesh = _import_stl("isomet_1205c.stl", (0, 0, 90), (0, 0, -5.06))
+        mesh = _import_stl("isomet_1205c.stl", (0, 0, 90), (0, 0, 0))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
