@@ -222,6 +222,70 @@ class drill_test:
 
         obj.Shape = part
 
+class fiberport_12mm:
+    '''
+    12mm Fiberport Mount with Drill only in top face of mount
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, x=0, y=0, z=0, adapter_args=dict()):
+        adapter_args.setdefault("mount_hole_dy", 30)
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'x').x = x
+        obj.addProperty('App::PropertyLength', 'y').y = y
+        obj.addProperty('App::PropertyLength', 'z').z = z
+
+        obj.ViewObject.ShapeColor = misc_color
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        x = obj.x.Value
+        y = obj.y.Value
+        z = obj.z.Value
+        # Driver mesh import:
+        mesh = _import_stl("fiberport_12mm.stl", (0, 0, 0), (x, y, z))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+class fiberport_12mm_sidemount:
+    '''
+    12mm Fiberport Mount with drill in top and side of baseplate
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, x=0, y=0, z=0, adapter_args=dict()):
+        adapter_args.setdefault("mount_hole_dy", 30)
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'x').x = x
+        obj.addProperty('App::PropertyLength', 'y').y = y
+        obj.addProperty('App::PropertyLength', 'z').z = z
+
+        obj.ViewObject.ShapeColor = misc_color
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        x = obj.x.Value
+        y = obj.y.Value
+        z = obj.z.Value
+        # Driver mesh import:
+        mesh = _import_stl("fiberport_12mm_sidemount.stl", (0, 0, 0), (x, y, z))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
 class mirror_mount_m05:
     '''
     New Mirror mount: Newport m05
