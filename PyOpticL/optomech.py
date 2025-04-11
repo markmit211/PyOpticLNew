@@ -259,9 +259,9 @@ class modified_isomet_1205c_on_km100pm:
 
         # TODO fix these parts to remove arbitrary translations
         _add_linked_object(obj, "Mount KM100PM", prism_mount_km100pm,
-                           pos_offset=(-15.25, -20.15, -17.50), **mount_args)
+                           pos_offset=(-15.25+x_off, -20.15+y_off, -17.50-z_off), **mount_args)
         _add_linked_object(obj, "Adapter Bracket", modified_mount_for_km100pm,
-                           pos_offset=(-15.25+x_off, -20.15+y_off, -17.50+z_off), **adapter_args)
+                           pos_offset=(-15.25, -20.15, -17.50), **adapter_args)
 
     def execute(self, obj):
         mesh = _import_stl("isomet_1205c.stl", (0, 0, 90), (0, 0, 0))
@@ -284,7 +284,7 @@ class modified_mount_for_km100pm:
         stage_length (float) : The length of the stage that mounts to the AOM
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=3, arm_thickness=8, arm_clearance=0, stage_thickness=3.65, stage_length=21):
+    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=3, arm_thickness=8, arm_clearance=0, stage_thickness=3, stage_length=21):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
@@ -306,13 +306,13 @@ class modified_mount_for_km100pm:
         dy = 47.5
         stage_dx = obj.StageLength.Value
         stage_dz = obj.StageThickness.Value
-        dz = stage_dz + 8.21 # Original 16.92
+        dz = 11.86 # Original 16.92
         # Main Body (Attached to Mount)
         part = _custom_box(dx=dx, dy=dy, dz=dz-obj.ArmClearance.Value,
                            x=0, y=0, z=obj.ArmClearance.Value)
         # Stage Body (Attached to AOM)
-        part = part.fuse(_custom_box(dx=stage_dx, dy=dy, dz=stage_dz-obj.ArmClearance.Value,
-                                     x=0, y=0, z=stage_dz, dir=(1, 0, -1)))
+        part = part.fuse(_custom_box(dx=stage_dx, dy=dy, dz=stage_dz,
+                                     x=0, y=0, z=dz, dir=(1, 0, -1)))
         # Slot Cutouts
         for ddy in [15.2, 38.1]:
             part = part.cut(_custom_box(dx=dx, dy=obj.SlotLength.Value+bolt_4_40['clear_dia'], dz=bolt_4_40['clear_dia'],
@@ -333,6 +333,37 @@ class modified_mount_for_km100pm:
         part = _bounding_box(obj, 3, 4, z_tol=True, min_offset=(0, 0, 0.668))
         part.Placement = obj.Placement
         obj.DrillPart = part
+        # dx = obj.ArmThickness.Value
+        # dy = 47.5
+        # stage_dx = obj.StageLength.Value
+        # stage_dz = obj.StageThickness.Value
+        # dz = stage_dz + 8.21 # Original 16.92
+        # # Main Body (Attached to Mount)
+        # part = _custom_box(dx=dx, dy=dy, dz=dz-obj.ArmClearance.Value,
+        #                    x=0, y=0, z=obj.ArmClearance.Value)
+        # # Stage Body (Attached to AOM)
+        # part = part.fuse(_custom_box(dx=stage_dx, dy=dy, dz=stage_dz-obj.ArmClearance.Value,
+        #                              x=0, y=0, z=stage_dz, dir=(1, 0, -1)))
+        # # Slot Cutouts
+        # for ddy in [15.2, 38.1]:
+        #     part = part.cut(_custom_box(dx=dx, dy=obj.SlotLength.Value+bolt_4_40['clear_dia'], dz=bolt_4_40['clear_dia'],
+        #                                 x=dx/2, y=25.4-ddy, z=6.4,
+        #                                 fillet=bolt_4_40['clear_dia']/2, dir=(-1, 0, 0)))
+        #     part = part.cut(_custom_box(dx=dx/2, dy=obj.SlotLength.Value+bolt_4_40['head_dia'], dz=bolt_4_40['head_dia'],
+        #                                 x=dx/2, y=25.4-ddy, z=6.4,
+        #                                 fillet=bolt_4_40['head_dia']/2, dir=(-1, 0, 0)))
+        # # AOM Mounting Holes
+        # for ddy in [0, -11.42, -26.65, -38.07]:
+        #     part = part.cut(_custom_cylinder(dia=bolt_4_40['clear_dia'], dz=stage_dz, head_dia=bolt_4_40['head_dia'],
+        #                                 head_dz=obj.CounterDepth.Value, countersink=obj.Countersink,
+        #                                 x=11.25, y=18.9+ddy, z=0, dir=(0,0,1)))
+        # part.translate(App.Vector(dx/2, 25.4-15.2+obj.SlotLength.Value/2, -6.4))
+        # part = part.fuse(part)
+        # obj.Shape = part
+
+        # part = _bounding_box(obj, 3, 4, z_tol=True, min_offset=(0, 0, 0.668))
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
 
 class fiber_long:
     '''
