@@ -113,6 +113,22 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### fiber_long
+  
+    Fiber input to fiberport  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
+### fiber_short
+  
+    Fiber input to fiberport  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### fiberport_12mm
   
     12mm Fiberport Mount with Drill only in top face of mount  
