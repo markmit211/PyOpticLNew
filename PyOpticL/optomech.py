@@ -438,7 +438,7 @@ class fiberport_12mm:
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'port').port = port
 
-        obj.ViewObject.ShapeColor = misc_color
+        obj.ViewObject.ShapeColor = mount_color
 
         if port == 1:
             _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
@@ -480,7 +480,7 @@ class fiberport_12mm_sidemount:
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'port').port = port
 
-        obj.ViewObject.ShapeColor = misc_color
+        obj.ViewObject.ShapeColor = mount_color
 
         if port == 1:
             _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
