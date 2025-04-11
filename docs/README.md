@@ -113,6 +113,20 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### modified_isomet_1205c_on_km100pm
+  
+    Isomet 1205C AOM on KM100PM Mount  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        diffraction_angle (float) : The diffraction angle (in degrees) of the AOM  
+        forward_direction (integer) : The direction of diffraction on forward pass (1=right, -1=left)  
+        backward_direction (integer) : The direction of diffraction on backward pass (1=right, -1=left)  
+  
+    Sub-Parts:  
+        prism_mount_km100pm (mount_args)  
+        mount_for_km100pm (adapter_args)  
+    
 ### modified_mount_for_km100pm
   
     Adapter for mounting isomet AOMs to km100pm kinematic mount (Low Profile)  
