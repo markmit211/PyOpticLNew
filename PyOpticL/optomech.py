@@ -259,12 +259,12 @@ class modified_isomet_1205c_on_km100pm:
 
         # TODO fix these parts to remove arbitrary translations
         _add_linked_object(obj, "Mount KM100PM", prism_mount_km100pm,
-                           pos_offset=(-15.25+x_off, -20.15+y_off, -17.50-z_off), **mount_args)
+                           pos_offset=(-15.25, -20.15, -17.50), **mount_args)
         _add_linked_object(obj, "Adapter Bracket", modified_mount_for_km100pm,
                            pos_offset=(-15.25, -20.15, -17.50), **adapter_args)
 
     def execute(self, obj):
-        mesh = _import_stl("isomet_1205c.stl", (0, 0, 90), (0, 0, 0))
+        mesh = _import_stl("isomet_1205c.stl", (0, 0, 90), (0, 0, -5.06))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
@@ -325,7 +325,7 @@ class modified_mount_for_km100pm:
         for ddy in [0, -11.42, -26.65, -38.07]:
             part = part.cut(_custom_cylinder(dia=bolt_4_40['clear_dia'], dz=stage_dz, head_dia=bolt_4_40['head_dia'],
                                         head_dz=obj.CounterDepth.Value, countersink=obj.Countersink,
-                                        x=11.25, y=18.9+ddy, z=0, dir=(0,0,1)))
+                                        x=11.25, y=18.9+ddy, z=dz-stage_dz, dir=(0,0,1)))
         part.translate(App.Vector(dx/2, 25.4-15.2+obj.SlotLength.Value/2, -6.4))
         part = part.fuse(part)
         obj.Shape = part
