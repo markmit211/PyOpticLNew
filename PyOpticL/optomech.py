@@ -222,7 +222,7 @@ class drill_test:
 
         obj.Shape = part
 
-class modified_isomet_1205c_on_km100pm:
+class isomet_1205c_on_km100pm_low_profile:
     '''
     Isomet 1205C AOM on KM100PM Mount
 
