@@ -222,9 +222,9 @@ class drill_test:
 
         obj.Shape = part
 
-class fiberport_12mm:
+class fiber_long:
     '''
-    12mm Fiberport Mount with Drill only in top face of mount
+    Fiber input to fiberport
 
     Args:
         drill (bool) : Whether baseplate mounting for this part should be drilled
@@ -257,7 +257,73 @@ class fiberport_12mm:
         z_rot = obj.z_rot.Value
 
         # Driver mesh import:
-        mesh = _import_stl("fiberport_12mm.stl", (x_rot, y_rot, z_rot), (x_test, y_test, z_test))
+        mesh = _import_stl("fiberport_long.stl", (x_rot, y_rot, z_rot), (x_test, y_test, z_test))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+class fiber_short:
+    '''
+    Fiber input to fiberport
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, x_test=0, y_test=0, z_test=0, adapter_args=dict(), x_rot = 0, y_rot = 0, z_rot = 0):
+        adapter_args.setdefault("mount_hole_dy", 30)
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'x_test').x_test = x_test
+        obj.addProperty('App::PropertyLength', 'y_test').y_test = y_test
+        obj.addProperty('App::PropertyLength', 'z_test').z_test = z_test
+        obj.addProperty('App::PropertyLength', 'x_rot').x_rot = x_rot
+        obj.addProperty('App::PropertyLength', 'y_rot').y_rot = y_rot
+        obj.addProperty('App::PropertyLength', 'z_rot').z_rot = z_rot
+
+        obj.ViewObject.ShapeColor = misc_color
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        x_test = obj.x_test.Value
+        y_test = obj.y_test.Value
+        z_test = obj.z_test.Value
+        x_rot = obj.x_rot.Value
+        y_rot = obj.y_rot.Value
+        z_rot = obj.z_rot.Value
+
+        # Driver mesh import:
+        mesh = _import_stl("fiberport_short.stl", (x_rot, y_rot, z_rot), (x_test, y_test, z_test))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+class fiberport_12mm:
+    '''
+    12mm Fiberport Mount with Drill only in top face of mount
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, adapter_args=dict()):
+        adapter_args.setdefault("mount_hole_dy", 30)
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+
+        obj.ViewObject.ShapeColor = misc_color
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+
+        # Driver mesh import:
+        mesh = _import_stl("fiberport_12mm.stl", (90, 270, 0), (-34.05, -12.596, 14.896))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
@@ -270,33 +336,21 @@ class fiberport_12mm_sidemount:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, x_test=0, y_test=0, z_test=0, adapter_args=dict(), x_rot = 0, y_rot = 0, z_rot = 0):
+    def __init__(self, obj, drill=True, adapter_args=dict()):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        obj.addProperty('App::PropertyLength', 'x_test').x_test = x_test
-        obj.addProperty('App::PropertyLength', 'y_test').y_test = y_test
-        obj.addProperty('App::PropertyLength', 'z_test').z_test = z_test
-        obj.addProperty('App::PropertyLength', 'x_rot').x_rot = x_rot
-        obj.addProperty('App::PropertyLength', 'y_rot').y_rot = y_rot
-        obj.addProperty('App::PropertyLength', 'z_rot').z_rot = z_rot
 
         obj.ViewObject.ShapeColor = misc_color
 
     # this defines the component body and drilling
     def execute(self, obj):
-        x_test = obj.x_test.Value
-        y_test = obj.y_test.Value
-        z_test = obj.z_test.Value
-        x_rot = obj.x_rot.Value
-        y_rot = obj.y_rot.Value
-        z_rot = obj.z_rot.Value
 
         # Driver mesh import:
-        mesh = _import_stl("fiberport_12mm_sidemount.stl", (x_rot, y_rot, z_rot), (x_test, y_test, z_test))
+        mesh = _import_stl("fiberport_12mm_sidemount.stl", (0, 90, 90), (19.05, 26.8965, -0.0275))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
