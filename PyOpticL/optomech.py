@@ -191,7 +191,7 @@ class drill_test:
         side_length (float) : The side length of the cube
     '''
     type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, side_len=15):
+    def __init__(self, obj, drill=True):
         # required for all object classes
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -199,8 +199,7 @@ class drill_test:
         # define any user-accessible properties here
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
-
+        
         # additional parameters (ie color, constants, etc)
         obj.ViewObject.ShapeColor = adapter_color
         self.mount_bolt = bolt_8_32
@@ -208,17 +207,7 @@ class drill_test:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
-        # spread = obj.Spread.Value
-        # part = _custom_box(dx=spread+0.35*3*inch, dy=1.8*inch, dz=16, 
-        #                    x=-0.5*(spread+0.35*inch), y=0, z=-(20.32+5/16*inch), fillet=5)
-        # part = _custom_box(dx=75+10+2.5, dy=96.25+10, dz=25.4*2, x=6.792+5.8435-1.25, y=34, z=-13.1, fillet=5)
-        part = _custom_cylinder(dia=2.7, dz=2*inch, x=9.12, y=15.75, z=-13.1)
-
-        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12, y=-15.75, z=-13.1))
-
-        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12-50, y=-15.75, z=-13.1))
-
-        part = part.fuse(_custom_cylinder(dia=2.7, dz=2*inch, x=9.12-50, y=15.75, z=-13.1))
+        part = _custom_box(dx=34.35, dy=58.436594, dz=19.171633, x=0, y=0, z=0, fillet=5)
 
         obj.Shape = part
 
@@ -284,7 +273,7 @@ class modified_mount_for_km100pm:
         stage_length (float) : The length of the stage that mounts to the AOM
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=2, arm_thickness=8, arm_clearance=0, stage_thickness=3, stage_length=21):
+    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=2, arm_thickness=8, arm_clearance=0, stage_thickness=3, stage_length=21, x_off=0, y_off=0, z_off=0):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
@@ -296,10 +285,16 @@ class modified_mount_for_km100pm:
         obj.addProperty('App::PropertyLength', 'ArmClearance').ArmClearance = arm_clearance
         obj.addProperty('App::PropertyLength', 'StageThickness').StageThickness = stage_thickness
         obj.addProperty('App::PropertyLength', 'StageLength').StageLength = stage_length
+        obj.addProperty('App::PropertyLength', 'x_off').x_off = x_off
+        obj.addProperty('App::PropertyLength', 'y_off').y_off = y_off
+        obj.addProperty('App::PropertyLength', 'z_off').z_off = z_off
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
 
         obj.ViewObject.ShapeColor = adapter_color
         obj.setEditorMode('Placement', 2)
+
+        _add_linked_object(obj, "drilltest", drill_test,
+                           pos_offset=(x_off, y_off, z_off))
 
     def execute(self, obj):
         dx = obj.ArmThickness.Value
@@ -330,9 +325,13 @@ class modified_mount_for_km100pm:
         part = part.fuse(part)
         obj.Shape = part
 
-        part = _bounding_box(obj, 3, 4, z_tol=True, min_offset=(0, 0, 0.668))
-        part.Placement = obj.Placement
-        obj.DrillPart = part
+
+
+        # part = _bounding_box(obj, 3, 4, z_tol=True, min_offset=(0, 0, 0.668))
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
+
+
         # dx = obj.ArmThickness.Value
         # dy = 47.5
         # stage_dx = obj.StageLength.Value
