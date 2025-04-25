@@ -207,10 +207,17 @@ class drill_test:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
-        # part = _custom_box(dx=110, dy=32, dz=12.7, x=0, y=0, z=0, fillet=5)
-        part = _custom_cylinder(dia=bolt_8_32['clear_dia'], dz=25.4,
-                                         head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
-                                         x=0, y=0, z=-25.4, dir=(0,0,1))
+
+        part = _custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=0, dir=(0,0,-1))
+
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=0, dir=(0,0,-1)))
+
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=0, dir=(0,0,-1)))
+
+        # # isolator_895_high_power
+        # part = _custom_cylinder(dia=bolt_8_32['clear_dia'], dz=25.4,
+        #                                  head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
+        #                                  x=0, y=0, z=-25.4, dir=(0,0,1))
 
         obj.Shape = part
 
@@ -443,7 +450,7 @@ class fiberport_12mm:
         port (int) : Blank if no port, 1 if long port, 2 if short port
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
+    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0, x_off=0, y_off=0, z_off=0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -451,6 +458,9 @@ class fiberport_12mm:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'port').port = port
+        obj.addProperty('App::PropertyLength', 'x_off').x_off = x_off
+        obj.addProperty('App::PropertyLength', 'y_off').y_off = y_off
+        obj.addProperty('App::PropertyLength', 'z_off').z_off = z_off
 
         obj.ViewObject.ShapeColor = mount_color
 
@@ -458,6 +468,9 @@ class fiberport_12mm:
             _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
         elif port ==2:
             _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
+        
+        # Temporary Drill Test
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(x_off, y_off, z_off))
 
     # this defines the component body and drilling
     def execute(self, obj):
