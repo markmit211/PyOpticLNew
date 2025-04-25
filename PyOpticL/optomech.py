@@ -207,7 +207,10 @@ class drill_test:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
-        part = _custom_box(dx=110, dy=32, dz=12.7, x=0, y=0, z=0, fillet=5)
+        # part = _custom_box(dx=110, dy=32, dz=12.7, x=0, y=0, z=0, fillet=5)
+        part = _custom_cylinder(dia=bolt_8_32['clear_dia'], dz=25.4,
+                                         head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
+                                         x=0, y=0, z=-25.4, dir=(0,0,1))
 
         obj.Shape = part
 
@@ -221,7 +224,7 @@ class isolator_895_high_power:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), surface=True):
         adapter_args.setdefault("mount_hole_dy", 43)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -229,6 +232,7 @@ class isolator_895_high_power:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Height').Height = height
+        obj.addProperty('App::PropertyBool', 'Surface').Surface = surface
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['IO-3D-850-VLP']
@@ -236,11 +240,14 @@ class isolator_895_high_power:
         self.max_angle = 10
         self.max_width = 5
 
-        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
-
+        if surface:
+            _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
+        else:
+            _add_linked_object(obj, "drill_test", drill_test, pos_offset=(0,0,0), rot_offset=(0,0,0))
     # this defines the component body and drilling
     def execute(self, obj):
         height = obj.Height.Value
+        surface = obj.Surface.Value
 
         # Driver mesh import:
 
@@ -248,7 +255,12 @@ class isolator_895_high_power:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        part = _custom_box(dx=110, dy=32, dz=12.7, x=0, y=0, z=-22.098, fillet=5)
+        part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.098, fillet=5)
+
+        # if not surface:
+            # Drill mounting hole directly into baseplate
+            # part = part.fuse(_custom_cylinder())
+
 
         part.Placement = obj.Placement
         obj.DrillPart = part
