@@ -238,7 +238,7 @@ class isolator_895_high_power:
         self.max_angle = 10
         self.max_width = 5
 
-        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402), rot_offset=(0, 0, 0), **adapter_args)
+        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
 
     # this defines the component body and drilling
     def execute(self, obj):
@@ -248,7 +248,7 @@ class isolator_895_high_power:
 
         # Driver mesh import:
 
-        mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (0+x_off, 0+y_off, 0+height))
+        mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0+y_off, 0+height))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
