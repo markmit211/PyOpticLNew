@@ -207,7 +207,7 @@ class drill_test:
 
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
-        part = _custom_box(dx=34.35, dy=58.436594, dz=19.171633, x=0, y=0, z=0, fillet=5)
+        part = _custom_box(dx=110, dy=32, dz=12.7, x=0, y=0, z=0, fillet=5)
 
         obj.Shape = part
 
@@ -221,7 +221,7 @@ class isolator_895_high_power:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict(mount_hole_dy=30), x_off=0, y_off=0):
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict(mount_hole_dy=30), x_off=0, y_off=0, z_off=0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -231,6 +231,7 @@ class isolator_895_high_power:
         obj.addProperty('App::PropertyLength', 'Height').Height = height
         obj.addProperty('App::PropertyLength', 'x_off').x_off = x_off
         obj.addProperty('App::PropertyLength', 'y_off').y_off = y_off
+        obj.addProperty('App::PropertyLength', 'z_off').z_off = z_off
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['IO-3D-850-VLP']
@@ -239,16 +240,15 @@ class isolator_895_high_power:
         self.max_width = 5
 
         _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(x_off, y_off, z_off), rot_offset=(0, 0, 0))
 
     # this defines the component body and drilling
     def execute(self, obj):
         height = obj.Height.Value
-        x_off = obj.x_off.Value
-        y_off = obj.y_off.Value
 
         # Driver mesh import:
 
-        mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0+y_off, 0+height))
+        mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0, 0+height))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
