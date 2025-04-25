@@ -450,7 +450,7 @@ class fiberport_12mm:
         port (int) : Blank if no port, 1 if long port, 2 if short port
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0, x_off=0, y_off=0, z_off=0):
+    def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -458,9 +458,6 @@ class fiberport_12mm:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'port').port = port
-        obj.addProperty('App::PropertyLength', 'x_off').x_off = x_off
-        obj.addProperty('App::PropertyLength', 'y_off').y_off = y_off
-        obj.addProperty('App::PropertyLength', 'z_off').z_off = z_off
 
         obj.ViewObject.ShapeColor = mount_color
 
@@ -468,9 +465,6 @@ class fiberport_12mm:
             _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
         elif port ==2:
             _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
-        
-        # Temporary Drill Test
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(x_off, y_off, z_off))
 
     # this defines the component body and drilling
     def execute(self, obj):
@@ -485,6 +479,12 @@ class fiberport_12mm:
 
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
                                 x=-7.5, y=13.335-26.67, z=-layout.inch/2))
+        
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=-10.2, dir=(0,0,-1)))
+
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
+
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
 
         part.Placement = obj.Placement
         obj.DrillPart = part
