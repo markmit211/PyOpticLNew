@@ -221,7 +221,7 @@ class isolator_895_high_power:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), x_off=0, y_off=0):
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict(mount_hole_dy=30), x_off=0, y_off=0):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
