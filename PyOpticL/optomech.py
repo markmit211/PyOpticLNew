@@ -208,11 +208,11 @@ class drill_test:
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
 
-        part = _custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=0, dir=(0,0,-1))
+        part = _custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=-10.2, dir=(0,0,-1))
 
-        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=0, dir=(0,0,-1)))
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
 
-        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=0, dir=(0,0,-1)))
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
 
         # # isolator_895_high_power
         # part = _custom_cylinder(dia=bolt_8_32['clear_dia'], dz=25.4,
