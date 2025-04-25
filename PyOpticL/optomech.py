@@ -221,17 +221,14 @@ class isolator_895_high_power:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict(mount_hole_dy=30), x_off=0, y_off=0, z_off=0):
-        adapter_args.setdefault("mount_hole_dy", 30)
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
+        adapter_args.setdefault("mount_hole_dy", 43)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Height').Height = height
-        obj.addProperty('App::PropertyLength', 'x_off').x_off = x_off
-        obj.addProperty('App::PropertyLength', 'y_off').y_off = y_off
-        obj.addProperty('App::PropertyLength', 'z_off').z_off = z_off
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['IO-3D-850-VLP']
@@ -239,7 +236,7 @@ class isolator_895_high_power:
         self.max_angle = 10
         self.max_width = 5
 
-        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), mount_hole_dy=40)
+        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
 
     # this defines the component body and drilling
     def execute(self, obj):
