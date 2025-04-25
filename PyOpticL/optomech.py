@@ -248,7 +248,7 @@ class isolator_895_high_power:
 
         # Driver mesh import:
 
-        mesh = _import_stl("IO-5-895-HP.stl", (90, 0, 90), (0+x_off, 0+y_off, 0+height))
+        mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (0+x_off, 0+y_off, 0+height))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
