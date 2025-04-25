@@ -247,7 +247,7 @@ class isolator_895_high_power:
     # this defines the component body and drilling
     def execute(self, obj):
         height = obj.Height.Value
-        surface = obj.Surface.Value
+        surface = obj.Surface
 
         # Driver mesh import:
 
