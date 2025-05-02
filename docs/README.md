@@ -113,14 +113,6 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
-### isolator_895_high_power
-  
-    Isolator 895 On Mount; Larger power range for TA usage  
-  
-    Args:  
-        drill (bool) : Whether baseplate mounting for this part should be drilled  
-        side_length (float) : The side length of the cube  
-    
 ### isomet_1205c_on_km100pm_low_profile
   
     Isomet 1205C AOM on KM100PM Mount  
@@ -150,17 +142,9 @@
         stage_thickness (float) : The thickness of the stage that mounts to the AOM  
         stage_length (float) : The length of the stage that mounts to the AOM  
     
-### fiber_long
+### isolator_895_high_power
   
-    Fiber input to fiberport  
-  
-    Args:  
-        drill (bool) : Whether baseplate mounting for this part should be drilled  
-        side_length (float) : The side length of the cube  
-    
-### fiber_short
-  
-    Fiber input to fiberport  
+    Isolator 895 On Mount; Larger power range for TA usage  
   
     Args:  
         drill (bool) : Whether baseplate mounting for this part should be drilled  
