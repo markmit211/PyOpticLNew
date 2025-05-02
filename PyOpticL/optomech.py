@@ -213,52 +213,11 @@ class drill_test:
         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
 
         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
-
         # # isolator_895_high_power
         # part = _custom_cylinder(dia=bolt_8_32['clear_dia'], dz=25.4,
         #                                  head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
         #                                  x=0, y=0, z=-25.4, dir=(0,0,1))
-
         obj.Shape = part
-
-
-class isolator_895_high_power:
-    '''
-    Isolator 895 On Mount; Larger power range for TA usage
-
-    Args:
-        drill (bool) : Whether baseplate mounting for this part should be drilled
-        side_length (float) : The side length of the cube
-    '''
-    type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
-        adapter_args.setdefault("mount_hole_dy", 43)
-        obj.Proxy = self
-        ViewProvider(obj.ViewObject)
-
-        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
-        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        obj.addProperty('App::PropertyLength', 'Height').Height = height
-
-        obj.ViewObject.ShapeColor = misc_color
-        self.part_numbers = ['IO-3D-850-VLP']
-        self.transmission = True
-        self.max_angle = 10
-        self.max_width = 5
-
-        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
-    # this defines the component body and drilling
-    def execute(self, obj):
-        height = obj.Height.Value
-
-        mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0, 0+height))
-        mesh.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh
-
-        part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.098, fillet=5)
-
-        part.Placement = obj.Placement
-        obj.DrillPart = part
 
 
 class isomet_1205c_on_km100pm_low_profile:
@@ -374,55 +333,44 @@ class modified_mount_for_km100pm:
         obj.DrillPart = part
 
 
-class fiber_long:
+class isolator_895_high_power:
     '''
-    Fiber input to fiberport
+    Isolator 895 On Mount; Larger power range for TA usage
 
     Args:
         drill (bool) : Whether baseplate mounting for this part should be drilled
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict()):
-        adapter_args.setdefault("mount_hole_dy", 30)
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
+        adapter_args.setdefault("mount_hole_dy", 43)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Height').Height = height
 
         obj.ViewObject.ShapeColor = misc_color
+        self.part_numbers = ['IO-3D-850-VLP']
+        self.transmission = True
+        self.max_angle = 10
+        self.max_width = 5
 
+        _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
+    # this defines the component body and drilling
     def execute(self, obj):
-        # Driver mesh import:
-        mesh = _import_stl("fiberport_long.stl", (0, 0, 0), (37.2, 0, 0))
+        height = obj.Height.Value
+
+        mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0, 0+height))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-class fiber_short:
-    '''
-    Fiber input to fiberport
+        part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.098, fillet=5)
 
-    Args:
-        drill (bool) : Whether baseplate mounting for this part should be drilled
-        side_length (float) : The side length of the cube
-    '''
-    type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, adapter_args=dict()):
-        adapter_args.setdefault("mount_hole_dy", 30)
-        obj.Proxy = self
-        ViewProvider(obj.ViewObject)
+        part.Placement = obj.Placement
+        obj.DrillPart = part
 
-        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
-        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-
-        obj.ViewObject.ShapeColor = misc_color
-
-    def execute(self, obj):
-        # Driver mesh import:
-        mesh = _import_stl("fiberport_short.stl", (0, 0, 0), (19.54, 0, 0))
-        mesh.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh
 
 class fiberport_12mm:
     '''
@@ -445,17 +393,11 @@ class fiberport_12mm:
 
         obj.ViewObject.ShapeColor = mount_color
 
-        # if port == 1:
-        #     _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
-        # elif port ==2:
-        #     _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
-
     def execute(self, obj):
         port = obj.port.Value
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm.stl", (90, 270, 0), (-34.05, -12.596, 14.896))
 
-        #experimental mesh adding
         if port ==1:
             port_mesh = _import_stl("fiberport_long.stl", (0, 0, 0), (37.2, 0, 0))
             mesh.addMesh(port_mesh)
@@ -502,14 +444,18 @@ class fiberport_12mm_sidemount:
 
         obj.ViewObject.ShapeColor = mount_color
 
-        if port == 1:
-            _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
-        elif port ==2:
-            _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
-
     def execute(self, obj):
+        port = obj.port.Value
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm_sidemount.stl", (0, 90, 90), (19.05, 26.8965, -0.0275))
+
+        if port ==1:
+            port_mesh = _import_stl("fiberport_long.stl", (0, 0, 0), (37.2, 0, 0))
+            mesh.addMesh(port_mesh)
+        elif port == 2:
+            port_mesh = _import_stl("fiberport_short.stl", (0, 0, 0), (19.54, 0, 0))
+            mesh.addMesh(port_mesh)
+
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
@@ -527,6 +473,161 @@ class fiberport_12mm_sidemount:
 
         part.Placement = obj.Placement
         obj.DrillPart = part
+
+
+# class fiber_long:
+#     '''
+#     Fiber input to fiberport
+
+#     Args:
+#         drill (bool) : Whether baseplate mounting for this part should be drilled
+#         side_length (float) : The side length of the cube
+#     '''
+#     type = 'Mesh::FeaturePython'
+#     def __init__(self, obj, drill=True, adapter_args=dict()):
+#         adapter_args.setdefault("mount_hole_dy", 30)
+#         obj.Proxy = self
+#         ViewProvider(obj.ViewObject)
+
+#         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+#         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+
+#         obj.ViewObject.ShapeColor = misc_color
+
+#     def execute(self, obj):
+#         # Driver mesh import:
+#         mesh = _import_stl("fiberport_long.stl", (0, 0, 0), (37.2, 0, 0))
+#         mesh.Placement = obj.Mesh.Placement
+#         obj.Mesh = mesh
+
+# class fiber_short:
+#     '''
+#     Fiber input to fiberport
+
+#     Args:
+#         drill (bool) : Whether baseplate mounting for this part should be drilled
+#         side_length (float) : The side length of the cube
+#     '''
+#     type = 'Mesh::FeaturePython'
+#     def __init__(self, obj, drill=True, adapter_args=dict()):
+#         adapter_args.setdefault("mount_hole_dy", 30)
+#         obj.Proxy = self
+#         ViewProvider(obj.ViewObject)
+
+#         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+#         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+
+#         obj.ViewObject.ShapeColor = misc_color
+
+#     def execute(self, obj):
+#         # Driver mesh import:
+#         mesh = _import_stl("fiberport_short.stl", (0, 0, 0), (19.54, 0, 0))
+#         mesh.Placement = obj.Mesh.Placement
+#         obj.Mesh = mesh
+
+# class fiberport_12mm:
+#     '''
+#     12mm Fiberport Mount with Drill only in top face of mount
+
+#     Args:
+#         drill (bool) : Whether baseplate mounting for this part should be drilled
+#         side_length (float) : The side length of the cube
+#         port (int) : 0 if no port, 1 if long port, 2 if short port
+#     '''
+#     type = 'Mesh::FeaturePython'
+#     def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
+#         adapter_args.setdefault("mount_hole_dy", 30)
+#         obj.Proxy = self
+#         ViewProvider(obj.ViewObject)
+
+#         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+#         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+#         obj.addProperty('App::PropertyLength', 'port').port = port
+
+#         obj.ViewObject.ShapeColor = mount_color
+
+#         # if port == 1:
+#         #     _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
+#         # elif port ==2:
+#         #     _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
+
+#     def execute(self, obj):
+#         port = obj.port.Value
+#         # Driver mesh import:
+#         mesh = _import_stl("fiberport_12mm.stl", (90, 270, 0), (-34.05, -12.596, 14.896))
+
+#         #experimental mesh adding
+#         if port ==1:
+#             port_mesh = _import_stl("fiberport_long.stl", (0, 0, 0), (37.2, 0, 0))
+#             mesh.addMesh(port_mesh)
+#         elif port == 2:
+#             port_mesh = _import_stl("fiberport_short.stl", (0, 0, 0), (19.54, 0, 0))
+#             mesh.addMesh(port_mesh)
+
+#         mesh.Placement = obj.Mesh.Placement
+#         obj.Mesh = mesh
+
+#         part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+#                                 x=-7.5, y=13.335, z=-layout.inch/2)
+
+#         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+#                                 x=-7.5, y=13.335-26.67, z=-layout.inch/2))
+#         # Dowel pin cutouts
+#         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=-10.2, dir=(0,0,-1)))
+
+#         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
+
+#         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
+
+#         part.Placement = obj.Placement
+#         obj.DrillPart = part
+
+# class fiberport_12mm_sidemount:
+#     '''
+#     12mm Fiberport Mount with drill in top and side of baseplate
+
+#     Args:
+#         drill (bool) : Whether baseplate mounting for this part should be drilled
+#         side_length (float) : The side length of the cube
+#         port (int) : 0 if no port, 1 if long port, 2 if short port
+#     '''
+#     type = 'Mesh::FeaturePython'
+#     def __init__(self, obj, drill=True, adapter_args=dict(), port = 0):
+#         adapter_args.setdefault("mount_hole_dy", 30)
+#         obj.Proxy = self
+#         ViewProvider(obj.ViewObject)
+
+#         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+#         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+#         obj.addProperty('App::PropertyLength', 'port').port = port
+
+#         obj.ViewObject.ShapeColor = mount_color
+
+#         if port == 1:
+#             _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
+#         elif port ==2:
+#             _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
+
+#     def execute(self, obj):
+#         # Driver mesh import:
+#         mesh = _import_stl("fiberport_12mm_sidemount.stl", (0, 90, 90), (19.05, 26.8965, -0.0275))
+#         mesh.Placement = obj.Mesh.Placement
+#         obj.Mesh = mesh
+
+#         part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+#                                 x=-2.54, y=13.335, z=-layout.inch/2)
+
+#         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
+#                                 x=-2.54, y=13.335-26.67, z=-layout.inch/2))
+#         # Dowel pin cutouts
+#         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=-10.2, dir=(0,0,-1)))
+
+#         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
+
+#         part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
+
+#         part.Placement = obj.Placement
+#         obj.DrillPart = part
 
 class mirror_mount_m05:
     '''
