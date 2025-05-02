@@ -445,20 +445,23 @@ class fiberport_12mm:
 
         obj.ViewObject.ShapeColor = mount_color
 
-        if port == 1:
-            _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
-        elif port ==2:
-            _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
+        # if port == 1:
+        #     _add_linked_object(obj, "Long Port", fiber_long, pos_offset=(0, 0, 0))
+        # elif port ==2:
+        #     _add_linked_object(obj, "Short Port", fiber_short, pos_offset=(0, 0, 0))
 
     def execute(self, obj):
-
+        port = obj.port.Value
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm.stl", (90, 270, 0), (-34.05, -12.596, 14.896))
 
         #experimental mesh adding
-        mesh2 = _import_stl("fiberport_short.stl", (0, 0, 0), (19.54, 0, 0))
-        mesh.addMesh(mesh2)
-
+        if port ==1:
+            port_mesh = _import_stl("fiberport_long.stl", (0, 0, 0), (37.2, 0, 0))
+            mesh.addMesh(port_mesh)
+        elif port == 2:
+            port_mesh = _import_stl("fiberport_short.stl", (0, 0, 0), (19.54, 0, 0))
+            mesh.addMesh(port_mesh)
 
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
