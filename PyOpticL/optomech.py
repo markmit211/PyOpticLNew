@@ -527,6 +527,12 @@ class fiberport_12mm_sidemount:
 
         part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
                                 x=-2.54, y=13.335-26.67, z=-layout.inch/2))
+        
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=-10.2, dir=(0,0,-1)))
+
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
+
+        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
 
         part.Placement = obj.Placement
         obj.DrillPart = part
