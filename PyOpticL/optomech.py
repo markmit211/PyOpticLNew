@@ -345,7 +345,7 @@ class modified_mount_for_km100pm:
         dy = 47.5
         stage_dx = obj.StageLength.Value
         stage_dz = obj.StageThickness.Value
-        dz = 11.86 # Original 16.92
+        dz = 11.86 # Original 16.92 #####################
         # Main Body (Attached to Mount)
         part = _custom_box(dx=dx, dy=dy, dz=dz-obj.ArmClearance.Value,
                            x=0, y=0, z=obj.ArmClearance.Value)
@@ -369,7 +369,7 @@ class modified_mount_for_km100pm:
         part = part.fuse(part)
         obj.Shape = part
 
-        part = _custom_box(dx=34.35, dy=58.436594, dz=19.171633, x=10.825, y=12.514664, z=-6.731633, fillet=5)
+        part = _custom_box(dx=34.35, dy=58.436594, dz=19.171633, x=10.825, y=12.514664, z=-6.731633, fillet=5) ######################
         part.Placement = obj.Placement
         obj.DrillPart = part
 
@@ -454,6 +454,12 @@ class fiberport_12mm:
 
         # Driver mesh import:
         mesh = _import_stl("fiberport_12mm.stl", (90, 270, 0), (-34.05, -12.596, 14.896))
+
+        #experimental mesh adding
+        mesh2 = _import_stl("fiberport_short.stl", (0, 0, 0), (19.54, 0, 0))
+        mesh.addMesh(mesh2)
+
+
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
