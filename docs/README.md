@@ -113,35 +113,6 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
-### isomet_1205c_on_km100pm_low_profile
-  
-    Isomet 1205C AOM on KM100PM Mount  
-  
-    Args:  
-        drill (bool) : Whether baseplate mounting for this part should be drilled  
-        diffraction_angle (float) : The diffraction angle (in degrees) of the AOM  
-        forward_direction (integer) : The direction of diffraction on forward pass (1=right, -1=left)  
-        backward_direction (integer) : The direction of diffraction on backward pass (1=right, -1=left)  
-  
-    Sub-Parts:  
-        prism_mount_km100pm (mount_args)  
-        mount_for_km100pm (adapter_args)  
-    
-### modified_mount_for_km100pm
-  
-    Adapter for mounting isomet AOMs to km100pm kinematic mount (Low Profile)  
-  
-    Args:  
-        mount_offset (float[3]) : The offset position of where the adapter mounts to the component  
-        drill (bool) : Whether baseplate mounting for this part should be drilled  
-        slot_length (float) : The length of the slots used for mounting to the km100pm  
-        countersink (bool) : Whether to drill a countersink instead of a counterbore for the AOM mount holes  
-        counter_depth (float) : The depth of the countersink/bores for the AOM mount holes  
-        arm_thickness (float) : The thickness of the arm the mounts to the km100PM  
-        arm_clearance (float) : The distance between the bottom of the adapter arm and the bottom of the km100pm  
-        stage_thickness (float) : The thickness of the stage that mounts to the AOM  
-        stage_length (float) : The length of the stage that mounts to the AOM  
-    
 ### isolator_895_high_power
   
     Isolator 895 On Mount; Larger power range for TA usage  
