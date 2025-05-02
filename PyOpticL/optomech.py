@@ -220,7 +220,7 @@ class drill_test:
         obj.Shape = part
 
 
-class isomet_1205c_on_km100pm_low_profile:
+class isomet_1205c_on_km100pm_low_profile: # Work in progress AOM
     '''
     Isomet 1205C AOM on KM100PM Mount
 
@@ -266,7 +266,7 @@ class isomet_1205c_on_km100pm_low_profile:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-class modified_mount_for_km100pm:
+class modified_mount_for_km100pm: # Work in progress mount for AOM
     '''
     Adapter for mounting isomet AOMs to km100pm kinematic mount (Low Profile)
 
@@ -358,7 +358,7 @@ class isolator_895_high_power:
         self.max_width = 5
 
         _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
-    # this defines the component body and drilling
+
     def execute(self, obj):
         height = obj.Height.Value
 
