@@ -1027,31 +1027,26 @@ class cage_mount_pair:
 
 class modular1:
     '''
-    Modular bracket for modular doublepass aom connections
+    Modular Cutouts for mounting 14_20 bolts to connect adjacent baseplates.
 
     Args:
         drill (bool) : Whether baseplate mounting for this part should be drilled
         z_offset (float) : How far down to offset the mount from the laser height (default flush)
+        Spread (float) : Distance between cutout centers
+        female (bool) : True if female cutout, False(default) if male
     '''
     type = 'Mesh::FeaturePython'
     defaultSpread = 52.2
-    # def __init__(self, obj, drill=True, xPos = 0, yPos = 0, zPos = 0, inx = 0, iny = 0, inz = 0):
-    def __init__(self, obj, drill=True, Spread=defaultSpread):
+    def __init__(self, obj, drill=True, Spread=defaultSpread, female=False):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        # obj.addProperty('App::PropertyLength','xPos').xPos = xPos
-        # obj.addProperty('App::PropertyLength','yPos').yPos = yPos
-        # obj.addProperty('App::PropertyLength','zPos').zPos = zPos
-        # # Used for debugging
-        # obj.addProperty('App::PropertyLength','inx').inx = inx
-        # obj.addProperty('App::PropertyLength','iny').iny = iny
-        # obj.addProperty('App::PropertyLength','inz').inz = inz
         
         # Spread Parameter:
         obj.addProperty('App::PropertyLength', 'Spread').Spread = Spread
+        obj.addProperty('App::PropertyBool', 'female').female = female
 
         obj.ViewObject.ShapeColor = mount_color
         # Probably not needed (From original copy)
@@ -1060,58 +1055,34 @@ class modular1:
         self.max_width = 1
 
     def execute(self, obj):
-        # base_dz = 19.2 - obj.zPos.Value
-        # mesh = _import_stl("modular1-union.stl", (0, -0, 0), (-0.5, 0, base_dz))
-        # # mesh = _import_stl("RSP1-Step.stl", (180, -0, 90), (5.969, -0, 0))
-        # mesh.Placement = obj.Mesh.Placement
-        # obj.Mesh = mesh
-
-        # xPos = obj.xPos.Value
-        # yPos = obj.yPos.Value
-        # zPos = obj.zPos.Value
-
-        # inx = obj.inx.Value
-        # iny = obj.iny.Value
-        # inz = obj.inz.Value
         spread = obj.Spread.Value
 
         bolt_depth = 6.5
         head_dia_14_20 = 10
         pocket_depth = bolt_depth+0.5*head_dia_14_20+2
-        # part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
-        #                    x=-xPos, y=-yPos, z=-zPos, dir=(0, 0, -1),
-        #                    fillet=5)
-        # part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=-inx, y=-iny, z=-inz, dir=(-1,0,0)))
 
-        # Rightmost modular component
-        part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
-                           x=-(37.4/2+11-0.5), y=-(spread/2), z=-(12.7), dir=(0, 0,-1),
-                           fillet=5)
-        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=-(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
+        if obj.female:
+            # Rightmost modular component
+            part = _custom_cylinder(dia=bolt_14_20['tap_dia'], dz=11, x=0, y=-(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0))
 
-        # Leftmost modular component
-        part = part.fuse(_custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
-                           x=-(37.4/2+11-0.5), y=(spread/2), z=-(12.7), dir=(0, 0,-1),
-                           fillet=5))
-        part = part.fuse(_custom_cylinder(dia=0.260*inch, dz=11, x=0, y=(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
+            # Leftmost modular component
+            part = part.fuse(_custom_cylinder(dia=bolt_14_20['tap_dia'], dz=11, x=0, y=(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
+        else:
+            # Rightmost modular component
+            part = _custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
+                            x=-(37.4/2+11-0.5), y=-(spread/2), z=-(12.7), dir=(0, 0,-1),
+                            fillet=5)
+            part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=11, x=0, y=-(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
-
+            # Leftmost modular component
+            part = part.fuse(_custom_box(dx=12+inch, dy=16, dz=pocket_depth+1,
+                            x=-(37.4/2+11-0.5), y=(spread/2), z=-(12.7), dir=(0, 0,-1),
+                            fillet=5))
+            part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=11, x=0, y=(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
         part.Placement = obj.Placement
         obj.DrillPart = part
-
-        # # mesh.recompute()
-        # part = Part.Shape()
-        # part.makeShapeFromMesh(mesh.Mesh.Topology, 0.1)
-        # obj.DrillPart = part
-
-        # part = Part.Shape()
-        # # for i in [-1, 0, 1]:
-        # #     part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=inch,
-        # #                                       x=0, y=i*12.7, z=-20.65, dir=(1,0,0)))
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
 
 
 class baseplate_mount:
