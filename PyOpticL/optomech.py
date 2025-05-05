@@ -2409,7 +2409,7 @@ class lens_holder_l05g:
         part = _custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
                                 x=-8, y=0, z=-layout.inch/2)
         for i in [-1, 1]:
-            part = part.fuse(_custom_box(dx=5, dy=2, dz=2.2,
+            part = part.fuse(_custom_box(dx=5.6, dy=2, dz=2.2,
                                          x=-8, y=i*5, z=-layout.inch/2,
                                          fillet=1, dir=(0, 0, -1)))
         part.Placement = obj.Placement
