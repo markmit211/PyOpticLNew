@@ -1063,10 +1063,10 @@ class modular1:
 
         if obj.female:
             # Rightmost modular component
-            part = _custom_cylinder(dia=bolt_14_20['tap_dia'], dz=11, x=0, y=-(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0))
+            part = _custom_cylinder(dia=bolt_14_20['tap_dia'], dz=inch, x=0, y=-(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0))
 
             # Leftmost modular component
-            part = part.fuse(_custom_cylinder(dia=bolt_14_20['tap_dia'], dz=11, x=0, y=(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
+            part = part.fuse(_custom_cylinder(dia=bolt_14_20['tap_dia'], dz=inch, x=0, y=(spread/2), z=-(12.7+14.5/2), dir=(-1,0,0)))
 
         else:
             # Rightmost modular component
