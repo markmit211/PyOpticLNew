@@ -214,11 +214,13 @@
     
 ### modular1
   
-    Modular bracket for modular doublepass aom connections  
+    Modular Cutouts for mounting 14_20 bolts to connect adjacent baseplates.  
   
     Args:  
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         z_offset (float) : How far down to offset the mount from the laser height (default flush)  
+        Spread (float) : Distance between cutout centers  
+        female (bool) : True if female cutout, False(default) if male  
     
 ### baseplate_mount
   
