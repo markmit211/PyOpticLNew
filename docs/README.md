@@ -113,6 +113,14 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### AOMO_3080_125
+  
+    Replacement AOM for ISOMET1205c  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        side_length (float) : The side length of the cube  
+    
 ### isolator_895_high_power
   
     Isolator 895 On Mount; Larger power range for TA usage  
