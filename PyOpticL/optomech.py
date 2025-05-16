@@ -220,6 +220,53 @@ class drill_test:
         obj.Shape = part
 
 
+class AOMO_3080_125_on_km100pm: # Work in progress AOM
+    '''
+    AOMO 3080-125 on KM100PM Mount
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        diffraction_angle (float) : The diffraction angle (in degrees) of the AOM
+        forward_direction (integer) : The direction of diffraction on forward pass (1=right, -1=left)
+        backward_direction (integer) : The direction of diffraction on backward pass (1=right, -1=left)
+
+    Sub-Parts:
+        prism_mount_km100pm (mount_args)
+        mount_for_km100pm (adapter_args)
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, diffraction_angle=degrees(0.026), forward_direction=1, backward_direction=1, mount_args=dict(), adapter_args=dict(), x_off=0, y_off=0, z_off=0):
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('App::PropertyAngle', 'DiffractionAngle').DiffractionAngle = diffraction_angle
+        obj.addProperty('App::PropertyInteger', 'ForwardDirection').ForwardDirection = forward_direction
+        obj.addProperty('App::PropertyInteger', 'BackwardDirection').BackwardDirection = backward_direction
+        obj.addProperty('App::PropertyLength', 'x_off').x_off = x_off
+        obj.addProperty('App::PropertyLength', 'y_off').y_off = y_off
+        obj.addProperty('App::PropertyLength', 'z_off').z_off = z_off
+
+        obj.ViewObject.ShapeColor = misc_color
+        self.diffraction_angle = diffraction_angle
+        self.diffraction_dir = (forward_direction, backward_direction)
+        self.transmission = True
+        self.max_angle = 10
+        self.max_width = 5
+
+        # TODO fix these parts to remove arbitrary translations
+        _add_linked_object(obj, "Mount KM100PM", prism_mount_km100pm,
+                           pos_offset=(-15.25, -20.15, -17.50+5.06), **mount_args)
+        _add_linked_object(obj, "Adapter Bracket", modified_mount_for_km100pm,
+                           pos_offset=(-15.25, -20.15, -17.50+5.06), **adapter_args)
+
+    def execute(self, obj):
+        part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=0, y=0, z=0, fillet=0)
+        part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=7, y=-inch, z=6.731, dir=(0,-1,0)))
+        part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=13, y=0.3*inch, z=0.275*inch, dir=(-1,0,0)))
+        obj.Shape = part
+
+
 class AOMO_3080_125:
     '''
     Replacement AOM for ISOMET1205c
@@ -229,7 +276,7 @@ class AOMO_3080_125:
         side_length (float) : The side length of the cube
     '''
     type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, side_len=15, x_off_1=0, y_off_1=0, z_off_1=0, x_off_2=0, y_off_2=0, z_off_2=0):
+    def __init__(self, obj, drill=True, side_len=15):
         # required for all object classes
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -238,31 +285,16 @@ class AOMO_3080_125:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
-        obj.addProperty('App::PropertyLength', 'x_off_1').x_off_1 = x_off_1
-        obj.addProperty('App::PropertyLength', 'y_off_1').y_off_1 = y_off_1
-        obj.addProperty('App::PropertyLength', 'z_off_1').z_off_1 = z_off_1
-        obj.addProperty('App::PropertyLength', 'x_off_2').x_off_2 = x_off_2
-        obj.addProperty('App::PropertyLength', 'y_off_2').y_off_2 = y_off_2
-        obj.addProperty('App::PropertyLength', 'z_off_2').z_off_2 = z_off_2
 
         # additional parameters (ie color, constants, etc)
         obj.ViewObject.ShapeColor = misc_color
         self.mount_bolt = bolt_8_32
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
-    # this defines the component body and drilling
     def execute(self, obj):
-        # Butterfly laser diode definition:
-        x1 = obj.x_off_1.Value
-        y1 = obj.y_off_1.Value
-        z1 = obj.z_off_1.Value
-        x2 = obj.x_off_2.Value
-        y2 = obj.y_off_2.Value
-        z2 = obj.z_off_2.Value
-
         part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=0, y=0, z=0, fillet=0)
         part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=7, y=-inch, z=6.731, dir=(0,-1,0)))
-        part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=x1, y=y1, z=z1, dir=(-1,0,0)))
+        part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=13, y=0.3*inch, z=0.275*inch, dir=(-1,0,0)))
         obj.Shape = part
 
 
