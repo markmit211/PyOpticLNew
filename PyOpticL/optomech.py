@@ -220,6 +220,51 @@ class drill_test:
         obj.Shape = part
 
 
+class AOMO_3080_125:
+    '''
+    Replacement AOM for ISOMET1205c
+
+    Args:
+        drill (bool) : Whether baseplate mounting for this part should be drilled
+        side_length (float) : The side length of the cube
+    '''
+    type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
+    def __init__(self, obj, drill=True, side_len=15, x_off_1, y_off_1, z_off_1, x_off_2, y_off_2, z_off_2):
+        # required for all object classes
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        # define any user-accessible properties here
+        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
+        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
+        obj.addProperty('App::PropertyLength', 'x_off_1').x_off_1 = x_off_1
+        obj.addProperty('App::PropertyLength', 'y_off_1').y_off_1 = y_off_1
+        obj.addProperty('App::PropertyLength', 'z_off_1').z_off_1 = z_off_1
+        obj.addProperty('App::PropertyLength', 'x_off_2').x_off_2 = x_off_2
+        obj.addProperty('App::PropertyLength', 'y_off_2').y_off_2 = y_off_2
+        obj.addProperty('App::PropertyLength', 'z_off_2').z_off_2 = z_off_2
+
+        # additional parameters (ie color, constants, etc)
+        obj.ViewObject.ShapeColor = adapter_color
+        self.mount_bolt = bolt_8_32
+        self.mount_dz = -obj.Baseplate.OpticsDz.Value
+
+    # this defines the component body and drilling
+    def execute(self, obj):
+        # Butterfly laser diode definition:
+        x1 = obj.x_off_1.Value
+        y1 = obj.y_off_1.Value
+        z1 = obj.z_off_1.Value
+        x2 = obj.x_off_2.Value
+        y2 = obj.y_off_2.Value
+        z2 = obj.z_off_2.Value
+
+        part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=x1, y=y1, z=z1, fillet=0)
+        part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=x2, y=y2, z=z2, dir=(0,-1,0)))
+        obj.Shape = part
+
+
 class isomet_1205c_on_km100pm_low_profile: # Work in progress AOM
     '''
     Isomet 1205C AOM on KM100PM Mount
