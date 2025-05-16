@@ -236,7 +236,7 @@ class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
         stage_length (float) : The length of the stage that mounts to the AOM
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=2, arm_thickness=8, arm_clearance=0, stage_thickness=3, stage_length=21):
+    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=2, arm_thickness=8, arm_clearance=0, stage_thickness=3, stage_length=25):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
