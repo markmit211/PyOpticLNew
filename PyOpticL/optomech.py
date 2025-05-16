@@ -229,7 +229,7 @@ class AOMO_3080_125:
         side_length (float) : The side length of the cube
     '''
     type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, side_len=15, x_off_1, y_off_1, z_off_1, x_off_2, y_off_2, z_off_2):
+    def __init__(self, obj, drill=True, side_len=15, x_off_1=0, y_off_1=0, z_off_1=0, x_off_2=0, y_off_2=0, z_off_2=0):
         # required for all object classes
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
