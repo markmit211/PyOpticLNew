@@ -330,7 +330,7 @@ class AOMO_3080_125_on_km100pm: # Work in progress AOM
 
     def execute(self, obj):
         x_off = 0
-        y_off = -0.3*inch
+        y_off = -0.3*inch-0.01 # 0.01 for difference between AOM measurements (0.7"-17.77mm)
         z_off = -6.98
 
         part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=x_off, y=y_off, z=z_off, fillet=0) # Main Body
