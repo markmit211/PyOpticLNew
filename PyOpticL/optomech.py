@@ -274,7 +274,8 @@ class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
                                         x=dx/2, y=25.4-ddy, z=6.4,
                                         fillet=bolt_4_40['head_dia']/2, dir=(-1, 0, 0)))
         # AOM Mounting Holes
-        for ddy in [0, -11.42, -26.65, -38.07]:
+        # for ddy in [0, -11.42, -26.65, -38.07]:
+        for ddy in [0]:
             part = part.cut(_custom_cylinder(dia=bolt_4_40['clear_dia'], dz=stage_dz, head_dia=bolt_4_40['head_dia'],
                                         head_dz=obj.CounterDepth.Value, countersink=obj.Countersink,
                                         x=11.25, y=18.9+ddy, z=dz-stage_dz, dir=(0,0,1)))
