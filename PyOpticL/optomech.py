@@ -262,7 +262,7 @@ class AOMO_3080_125:
 
         part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=0, y=0, z=0, fillet=0)
         part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=7, y=-inch, z=6.731, dir=(0,-1,0)))
-        part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=0, y=0, z=0, dir=(0,-1,-1)))
+        part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=x1, y=y1, z=z1, dir=(-1,0,0)))
         obj.Shape = part
 
 
