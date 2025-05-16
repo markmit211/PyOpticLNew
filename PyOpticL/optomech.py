@@ -234,7 +234,7 @@ class AOMO_3080_125_on_km100pm: # Work in progress AOM
         prism_mount_km100pm (mount_args)
         mount_for_km100pm (adapter_args)
     '''
-    type = 'Mesh::FeaturePython'
+    type = 'Part::FeaturePython'
     def __init__(self, obj, drill=True, diffraction_angle=degrees(0.026), forward_direction=1, backward_direction=1, mount_args=dict(), adapter_args=dict(), x_off=0, y_off=0, z_off=0):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
