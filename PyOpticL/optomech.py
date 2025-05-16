@@ -278,7 +278,7 @@ class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
         for ddy in [0, -20]:
             part = part.cut(_custom_cylinder(dia=bolt_4_40['clear_dia'], dz=stage_dz, head_dia=bolt_4_40['head_dia'],
                                         head_dz=obj.CounterDepth.Value, countersink=obj.Countersink,
-                                        x=11.25, y=18.9+ddy, z=dz-stage_dz, dir=(0,0,1)))
+                                        x=11.25, y=ddy, z=dz-stage_dz, dir=(0,0,1)))
         part.translate(App.Vector(dx/2, 25.4-15.2+obj.SlotLength.Value/2, -6.4))
         part = part.fuse(part)
         obj.Shape = part
