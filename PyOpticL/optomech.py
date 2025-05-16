@@ -371,7 +371,7 @@ class AOMO_3080_125:
         part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=7, y=-inch, z=6.731, dir=(0,-1,0)))
         part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=13, y=0.3*inch, z=0.275*inch, dir=(-1,0,0)))
 
-        part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=0, y=0.88*inch, z=4, dir=(0,0,-1)))
+        # part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=0, y=0.88*inch, z=4, dir=(0,0,-1)))
         part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=0, y=-0.87*inch, z=4, dir=(0,0,-1)))
         obj.Shape = part
 
