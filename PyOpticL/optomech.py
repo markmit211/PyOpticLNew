@@ -283,7 +283,7 @@ class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
         part = part.fuse(part)
         obj.Shape = part
 
-        part = _custom_box(dx=34.35, dy=58.436594, dz=19.171633, x=10.825, y=12.514664, z=-6.731633, fillet=5) ######################
+        part = _custom_box(dx=34.35+3, dy=58.436594, dz=19.171633, x=10.825, y=12.514664, z=-6.731633, fillet=5) ######################
         part.Placement = obj.Placement
         obj.DrillPart = part
 
