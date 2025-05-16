@@ -246,7 +246,7 @@ class AOMO_3080_125:
         obj.addProperty('App::PropertyLength', 'z_off_2').z_off_2 = z_off_2
 
         # additional parameters (ie color, constants, etc)
-        obj.ViewObject.ShapeColor = adapter_color
+        obj.ViewObject.ShapeColor = misc_color
         self.mount_bolt = bolt_8_32
         self.mount_dz = -obj.Baseplate.OpticsDz.Value
 
@@ -260,8 +260,8 @@ class AOMO_3080_125:
         y2 = obj.y_off_2.Value
         z2 = obj.z_off_2.Value
 
-        part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=x1, y=y1, z=z1, fillet=0)
-        part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=x2, y=y2, z=z2, dir=(0,-1,0)))
+        part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=0, y=0, z=0, fillet=0)
+        part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=7, y=-inch, z=6.731, dir=(0,-1,0)))
         obj.Shape = part
 
 
