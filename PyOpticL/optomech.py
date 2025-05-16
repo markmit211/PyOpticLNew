@@ -236,7 +236,7 @@ class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
         stage_length (float) : The length of the stage that mounts to the AOM
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=2, arm_thickness=8, arm_clearance=0, stage_thickness=3, stage_length=25):
+    def __init__(self, obj, drill=True, slot_length=5, countersink=False, counter_depth=2, arm_thickness=8, arm_clearance=0, stage_thickness=3, stage_length=23):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
@@ -330,7 +330,7 @@ class AOMO_3080_125_on_km100pm: # Work in progress AOM
 
     def execute(self, obj):
         x_off = 0
-        y_off = -0.3*inch-0.01-0.074 # 0.01 for difference between AOM measurements (0.7"-17.77mm)
+        y_off = -0.3*inch-0.084 # 0.084 for difference between AOM measurements
         z_off = -6.98
 
         part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=x_off, y=y_off, z=z_off, fillet=0) # Main Body
@@ -339,40 +339,6 @@ class AOMO_3080_125_on_km100pm: # Work in progress AOM
 
         part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=x_off, y=0.88*inch+y_off, z=4+z_off, dir=(0,0,-1)))
         part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=x_off, y=-0.87*inch+y_off, z=4+z_off, dir=(0,0,-1)))
-        obj.Shape = part
-
-
-class AOMO_3080_125:
-    '''
-    Replacement AOM for ISOMET1205c
-
-    Args:
-        drill (bool) : Whether baseplate mounting for this part should be drilled
-        side_length (float) : The side length of the cube
-    '''
-    type = 'Part::FeaturePython' # if importing from stl, this will be 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, side_len=15):
-        # required for all object classes
-        obj.Proxy = self
-        ViewProvider(obj.ViewObject)
-
-        # define any user-accessible properties here
-        obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
-        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
-        obj.addProperty('App::PropertyLength', 'Side_Length').Side_Length = side_len
-
-        # additional parameters (ie color, constants, etc)
-        obj.ViewObject.ShapeColor = misc_color
-        self.mount_bolt = bolt_8_32
-        self.mount_dz = -obj.Baseplate.OpticsDz.Value
-
-    def execute(self, obj):
-        part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=0, y=0, z=0, fillet=0)
-        part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=7, y=-inch, z=6.731, dir=(0,-1,0)))
-        part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=13, y=0.3*inch, z=0.275*inch, dir=(-1,0,0)))
-
-        part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=0, y=0.88*inch, z=4, dir=(0,0,-1)))
-        part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=0, y=-0.87*inch, z=4, dir=(0,0,-1)))
         obj.Shape = part
 
 
