@@ -335,7 +335,7 @@ class AOMO_3080_125_on_km100pm: # Work in progress AOM
 
         part = _custom_box(dx=inch, dy=2*inch, dz=0.53*inch, x=x_off, y=y_off, z=z_off, fillet=0) # Main Body
         part = part.fuse(_custom_cylinder(dia=4.75, dz=7.8, x=7+x_off, y=y_off-inch, z=6.731+z_off, dir=(0,-1,0))) # SMA Snap Connector
-        part = part.cut(_custom_cylinder(dia=3, dz=1.5*inch, x=13+x_off, y=0.3*inch+y_off, z=0.275*inch+z_off, dir=(-1,0,0))) # Beam Path Hole
+        part = part.cut(_custom_cylinder(dia=1.6, dz=1.5*inch, x=13+x_off, y=0.3*inch+y_off, z=0.275*inch+z_off, dir=(-1,0,0))) # Beam Path Hole
 
         part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=x_off, y=0.88*inch+y_off, z=4+z_off, dir=(0,0,-1)))
         part = part.cut(_custom_cylinder(dia=bolt_4_40['tap_dia'], dz=5, x=x_off, y=-0.87*inch+y_off, z=4+z_off, dir=(0,0,-1)))
