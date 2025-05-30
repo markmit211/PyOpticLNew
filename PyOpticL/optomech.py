@@ -240,6 +240,7 @@ class chromatic_rotation_stage:
         ViewProvider(obj.ViewObject)
 
         obj.addProperty('App::PropertyBool', 'Invert').Invert = invert
+        obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'xoff').xoff = xoff
         obj.addProperty('App::PropertyLength', 'yoff').yoff = yoff
         obj.addProperty('App::PropertyLength', 'zoff').zoff = zoff
@@ -254,7 +255,7 @@ class chromatic_rotation_stage:
         zoff = obj.zoff.Value
 
 
-        mesh = _import_stl("FBR-AH2.stl", (90, -90, 180), (-3.566+xoff, 0+yoff, 0+zoff))
+        mesh = _import_stl("FBR-AH2.stl", (90, 0, 90), (-3.566+xoff, 0+yoff, 0+zoff))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
