@@ -1321,7 +1321,7 @@ class surface_adapter:
 
         obj.addProperty('App::PropertyBool', 'adjust').adjust = adjust
         obj.addProperty('App::PropertyLength', 'adjust_dist').adjust_dist = adjust_dist
-        obj.addProperty('App:PropertyLength', 'tolerance').tolerance = tolerance
+        obj.addProperty('App::PropertyLength', 'tolerance').tolerance = tolerance
 
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
 
