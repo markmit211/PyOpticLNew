@@ -1358,7 +1358,10 @@ class surface_adapter:
                                              x=0, y=i*obj.MountHoleDistance.Value/2, z=0))
         obj.Shape = part
 
-        part = _bounding_box(obj, self.drill_tolerance, 6) ################# Change to include new adjustment range
+        # part = _bounding_box(obj, self.drill_tolerance, 6) ################# Change to include new adjustment range
+        part = _custom_box(dx=dx, dy=dy, dz=dz, x=0, y=0, z=-12.7, fillet=6, dir=(0,0,-1))
+
+
         for i in [-1, 1]:
             part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
                                               x=0, y=i*obj.MountHoleDistance.Value/2, z=0))
