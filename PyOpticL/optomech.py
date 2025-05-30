@@ -220,6 +220,50 @@ class drill_test:
         obj.Shape = part
 
 
+
+class chromatic_rotation_stage:
+    '''
+    Rotation stage, model FBR-AH2
+
+    Args:
+        invert (bool) : Whether the mount should be offset 90 degrees from the component
+        mount_hole_dy (float) : The spacing between the two mount holes of it's adapter
+        wave_plate_part_num (string) : The Thorlabs part number of the wave plate being used
+
+    Sub-Parts:
+        surface_adapter (adapter_args)
+    '''
+    type = 'Mesh::FeaturePython'
+    def __init__(self, obj, invert=False, adapter_args=dict(), xoff=0, yoff=0, zoff=0):
+        adapter_args.setdefault("mount_hole_dy", 25)
+        obj.Proxy = self
+        ViewProvider(obj.ViewObject)
+
+        obj.addProperty('App::PropertyBool', 'Invert').Invert = invert
+        obj.addProperty('App::PropertyLength', 'xoff').xoff = xoff
+        obj.addProperty('App::PropertyLength', 'yoff').yoff = yoff
+        obj.addProperty('App::PropertyLength', 'zoff').zoff = zoff
+
+        obj.ViewObject.ShapeColor = misc_color
+        self.part_numbers = ['RSP05']
+        self.transmission = True
+
+    def execute(self, obj):
+        xoff = obj.xoff.Value
+        yoff = obj.yoff.Value
+        zoff = obj.zoff.Value
+
+
+        mesh = _import_stl("FBR-AH2.stl", (90, 0, 90), (-3.566+xoff, 0+yoff, 0+zoff))
+        mesh.Placement = obj.Mesh.Placement
+        obj.Mesh = mesh
+
+        part = _custom_cylinder(dia=3.18, dz=5, x=0, y=0, z=-14.3, dir=(0,0,-1))
+
+        part.Placement = obj.Placement
+        obj.DrillPart = part
+
+
 class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
     '''
     Adapter for mounting AOMO 3080-125 to km100pm kinematic mount (Low Profile)
