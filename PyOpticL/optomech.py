@@ -269,10 +269,10 @@ class chromatic_rotation_stage:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        part = _custom_cylinder(dia=3.18, dz=5, x=0, y=0, z=-14.3, dir=(0,0,-1))
+        # part = _custom_cylinder(dia=3.18, dz=5, x=0, y=0, z=-14.3, dir=(0,0,-1))
 
-        part.Placement = obj.Placement
-        obj.DrillPart = part
+        # part.Placement = obj.Placement
+        # obj.DrillPart = part
 
 
 class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
