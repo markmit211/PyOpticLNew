@@ -1343,9 +1343,9 @@ class surface_adapter:
         
         if obj.adjust:
             part = part.cut(_custom_box(dx=bolt_8_32['clear_dia'], dy=bolt_8_32['clear_dia'] + adj_dist, dz=dz,
-                                         x=0, y=0, z=-dz, fillet=bolt_8_32['clear_dia'], dir=(0,0,1)))
+                                         x=0, y=0, z=-dz, fillet=bolt_8_32['clear_dia']/2, dir=(0,0,1)))
             part = part.cut(_custom_box(dx=bolt_8_32['head_dia'], dy=bolt_8_32['head_dia'] + adj_dist, dz=bolt_8_32['head_dz'],
-                                         x=0, y=0, z=-dz, fillet=bolt_8_32['head_dia'], dir=(0,0,1)))
+                                         x=0, y=0, z=-dz, fillet=bolt_8_32['head_dia']/2, dir=(0,0,1)))
         
         else:
             part = part.cut(_custom_cylinder(dia=bolt_8_32['clear_dia'], dz=dz,
