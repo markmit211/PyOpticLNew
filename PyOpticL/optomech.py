@@ -1361,7 +1361,7 @@ class surface_adapter:
         obj.Shape = part
 
         # part = _bounding_box(obj, self.drill_tolerance, 6) ################# Change to include new adjustment range
-        part = _custom_box(dx=dx+fillet_tolerance, dy=dy+fillet_tolerance, dz=dz, x=0, y=0, z=0, fillet=dx/2, dir=(0,0,-1))
+        part = _custom_box(dx=dx+fillet_tolerance, dy=dy+fillet_tolerance, dz=dz+10, x=0, y=0, z=-dz, fillet=dx/2, dir=(0,0,1))
 
 
         for i in [-1, 1]:
