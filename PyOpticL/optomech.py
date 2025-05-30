@@ -208,15 +208,18 @@ class drill_test:
     # this defines the component body and drilling
     def execute(self, obj): # z is simply dz+half of mount import height
 
-        part = _custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=-10.2, dir=(0,0,-1))
+        # part = _custom_cylinder(dia=2, dz=5, x=-7.5, y=20.05, z=-10.2, dir=(0,0,-1))
 
-        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
+        # part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=13.335, z=-10.2, dir=(0,0,-1)))
 
-        part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
+        # part = part.fuse(_custom_cylinder(dia=2, dz=5, x=1, y=-13.335, z=-10.2, dir=(0,0,-1)))
         # # isolator_895_high_power
         # part = _custom_cylinder(dia=bolt_8_32['clear_dia'], dz=25.4,
         #                                  head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
         #                                  x=0, y=0, z=-25.4, dir=(0,0,1))
+
+        part = _custom_cylinder(dia=3.18, dz=5, x=0, y=0, z=-14.3, dir=(0,0,-1))
+
         obj.Shape = part
 
 
@@ -249,6 +252,9 @@ class chromatic_rotation_stage:
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['RSP05']
         self.transmission = True
+
+        _add_linked_object(obj, "drill_test", drill_test,
+                           pos_offset=(0, 0, 0), **adapter_args)
 
     def execute(self, obj):
         xoff = obj.xoff.Value
