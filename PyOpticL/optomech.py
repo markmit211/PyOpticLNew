@@ -1310,7 +1310,7 @@ class surface_adapter:
         outer_thickness (float) : The thickness of the walls around the bolt holes
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, mount_hole_dy=20, adapter_height=8, outer_thickness=2, adjust=False, adjust_dist=5, tolerance=3):
+    def __init__(self, obj, drill=True, mount_hole_dy=20, adapter_height=8, outer_thickness=2, adjust=False, adjust_dist=5, tolerance=1):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
