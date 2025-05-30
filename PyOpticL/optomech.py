@@ -1310,7 +1310,7 @@ class surface_adapter:
         outer_thickness (float) : The thickness of the walls around the bolt holes
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, mount_hole_dy=20, adapter_height=8, outer_thickness=2, adjust=False, adjust_dist=5):
+    def __init__(self, obj, drill=True, mount_hole_dy=20, adapter_height=8, outer_thickness=2, adjust=False, adjust_dist=5, tolerance=3):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
@@ -1321,6 +1321,7 @@ class surface_adapter:
 
         obj.addProperty('App::PropertyBool', 'adjust').adjust = adjust
         obj.addProperty('App::PropertyLength', 'adjust_dist').adjust_dist = adjust_dist
+        obj.addProperty('App:PropertyLength', 'tolerance').tolerance = tolerance
 
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
 
@@ -1332,6 +1333,7 @@ class surface_adapter:
         dx = bolt_8_32['head_dia']+obj.OuterThickness.Value*2
         dy = dx+obj.MountHoleDistance.Value
         dz = obj.AdapterHeight.Value
+        fillet_tolerance = obj.tolerance.Value
 
         if obj.adjust:
             adj_dist = obj.adjust_dist.Value
@@ -1359,7 +1361,7 @@ class surface_adapter:
         obj.Shape = part
 
         # part = _bounding_box(obj, self.drill_tolerance, 6) ################# Change to include new adjustment range
-        part = _custom_box(dx=dx, dy=dy, dz=dz, x=0, y=0, z=-12.7, fillet=6, dir=(0,0,-1))
+        part = _custom_box(dx=dx+fillet_tolerance, dy=dy+fillet_tolerance, dz=dz, x=0, y=0, z=-12.7, fillet=dx/2, dir=(0,0,-1))
 
 
         for i in [-1, 1]:
