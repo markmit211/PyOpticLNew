@@ -257,9 +257,6 @@ class chromatic_rotation_stage:
         self.part_numbers = ['RSP05']
         self.transmission = True
 
-        _add_linked_object(obj, "drill_test", drill_test,
-                           pos_offset=(0, 0, 0), **adapter_args)
-
     def execute(self, obj):
         xoff = obj.xoff.Value
         yoff = obj.yoff.Value
@@ -270,10 +267,14 @@ class chromatic_rotation_stage:
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
-        # part = _custom_cylinder(dia=3.18, dz=5, x=0, y=0, z=-14.3, dir=(0,0,-1))
+        x_off=-3.5662
+        part = _custom_box(dx=9, dy=17, dz=1.6+0.1, x=x_off, y=0, z=-12.7+0.1, dir=(0,0,-1))
 
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
+        part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=x_off, y=6.35, z=-14.3, dir=(0,0,-1)))
+        part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=x_off, y=-6.35, z=-14.3, dir=(0,0,-1)))
+
+        part.Placement = obj.Placement
+        obj.DrillPart = part
 
 
 class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
