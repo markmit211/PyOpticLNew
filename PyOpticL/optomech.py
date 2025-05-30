@@ -221,7 +221,7 @@ class drill_test:
         part = _custom_cylinder(dia=3.18, dz=6, x=0, y=6.35, z=-14.3, dir=(0,0,-1))
         part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=0, y=-6.35, z=-14.3, dir=(0,0,-1)))
 
-        part = part.fuse(_custom_box(dx=9, dy=17, dz=1.6, x=0, y=0, z=0, fillet=5, dir=(0,0,-1)))
+        part = part.fuse(_custom_box(dx=9, dy=17, dz=1.6, x=0, y=0, z=0, fillet=5))
 
         obj.Shape = part
 
