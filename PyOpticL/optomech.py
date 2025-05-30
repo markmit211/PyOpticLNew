@@ -238,7 +238,6 @@ class chromatic_rotation_stage:
     '''
     type = 'Mesh::FeaturePython'
     def __init__(self, obj, drill=True, invert=False, adapter_args=dict(), xoff=0, yoff=0, zoff=0):
-        adapter_args.setdefault("mount_hole_dy", 25)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
