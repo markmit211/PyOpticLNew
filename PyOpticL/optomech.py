@@ -218,7 +218,7 @@ class drill_test:
         #                                  head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
         #                                  x=0, y=0, z=-25.4, dir=(0,0,1))
 
-        part = _custom_box(dx=9, dy=17, dz=1.6, x=0, y=0, z=0)
+        part = _custom_box(dx=9, dy=17, dz=1.6, x=0, y=0, z=-12.7, dir=(0,0,-1))
 
         part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=0, y=6.35, z=-14.3, dir=(0,0,-1)))
         part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=0, y=-6.35, z=-14.3, dir=(0,0,-1)))
@@ -265,7 +265,7 @@ class chromatic_rotation_stage:
         zoff = obj.zoff.Value
 
 
-        mesh = _import_stl("FBR-AH2.stl", (0, 0, 0), (-3.566+xoff, 0+yoff, 0+zoff))
+        mesh = _import_stl("FBR-AH2.stl", (0, 0, 0), (xoff, 0+yoff, 0+zoff))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
