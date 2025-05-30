@@ -218,7 +218,10 @@ class drill_test:
         #                                  head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
         #                                  x=0, y=0, z=-25.4, dir=(0,0,1))
 
-        part = _custom_cylinder(dia=3.18, dz=5, x=0, y=0, z=-14.3, dir=(0,0,-1))
+        part = _custom_cylinder(dia=3.18, dz=6, x=0, y=6.35, z=-14.3, dir=(0,0,-1))
+        part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=0, y=-6.35, z=-14.3, dir=(0,0,-1)))
+
+        part = part.fuse(_custom_box(dx=9, dy=17, dz=1.6, x=0, y=0, z=0, fillet=5, dir=(0,0,-1)))
 
         obj.Shape = part
 
