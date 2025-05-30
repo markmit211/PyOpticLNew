@@ -1362,7 +1362,7 @@ class skate_mount:
         cube_tol (float) : The tolerance for size of the recess in the skate mount
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, cube_dx=10, cube_dy=10, cube_dz=10, mount_hole_dy=20, cube_depth=1, outer_thickness=2, cube_tol=0.1, slots=False):
+    def __init__(self, obj, drill=True, cube_dx=10, cube_dy=10, cube_dz=10, mount_hole_dy=18, cube_depth=1, outer_thickness=2, cube_tol=0.1, slots=False):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
