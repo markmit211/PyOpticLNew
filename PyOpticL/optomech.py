@@ -561,18 +561,6 @@ class isolator_895_high_power:
 
         if not obj.Cage:
             mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0, 0+height))
-            mount_adapter = _import_stl("TRB1-90.stl", (xrot, yrot, zrot), (xoff, yoff, zoff+height))
-            mesh.addMesh(mount_adapter)
-            # post_mesh = 0
-            # post_adapter = 0
-            
-
-
-
-
-
-
-
             mesh.Placement = obj.Mesh.Placement
             obj.Mesh = mesh
 
@@ -588,6 +576,13 @@ class isolator_895_high_power:
         
         else:
             mesh = _import_stl("IO-5-895-HP.stl", (180, 0, 0), (54.102, 0, 0+height))
+            mount_adapter = _import_stl("TRB1-90.stl", (xrot, yrot, zrot), (xoff, yoff, zoff+height))
+            mesh.addMesh(mount_adapter)
+            # post_mesh = 0
+            # post_adapter = 0
+
+
+            
             mesh.Placement = obj.Mesh.Placement
             obj.Mesh = mesh
 
