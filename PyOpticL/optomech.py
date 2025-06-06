@@ -521,7 +521,7 @@ class isolator_895_high_power:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), cage=False):
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), cage=False, xoff=0, yoff=0, zoff=0, xrot=0, yrot=0, zrot=0):
         adapter_args.setdefault("mount_hole_dy", 43)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -530,6 +530,15 @@ class isolator_895_high_power:
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Height').Height = height
         obj.addProperty('App::PropertyBool', 'Cage').Cage = cage
+
+        obj.addProperty('App::PropertyLength', 'xoff').xoff = xoff
+        obj.addProperty('App::PropertyLength', 'yoff').yoff = yoff
+        obj.addProperty('App::PropertyLength', 'zoff').zoff = zoff
+
+        
+        obj.addProperty('App::PropertyLength', 'xrot').xrot = xrot
+        obj.addProperty('App::PropertyLength', 'yrot').yrot = yrot
+        obj.addProperty('App::PropertyLength', 'zrot').zrot = zrot
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['IO-3D-850-VLP']
@@ -542,13 +551,40 @@ class isolator_895_high_power:
 
     def execute(self, obj):
         height = obj.Height.Value
+        xoff = obj.xoff.Value
+        yoff = obj.yoff.Value
+        zoff = obj.zoff.Value
+
+        xrot = obj.xrot.Value
+        yrot = obj.yrot.Value
+        zrot = obj.zrot.Value
 
         if not obj.Cage:
             mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0, 0+height))
+            mount_adapter = _import_stl("TRB1-90.stl", (xrot, yrot, zrot), (xoff, yoff, zoff+height))
+            mesh.add(mount_adapter)
+            # post_mesh = 0
+            # post_adapter = 0
+            
+
+
+
+
+
+
+
             mesh.Placement = obj.Mesh.Placement
             obj.Mesh = mesh
 
             part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.098, fillet=5)
+        
+
+
+
+
+
+
+
         
         else:
             mesh = _import_stl("IO-5-895-HP.stl", (180, 0, 0), (54.102, 0, 0+height))
