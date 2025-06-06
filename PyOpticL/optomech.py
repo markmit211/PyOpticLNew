@@ -583,8 +583,11 @@ class isolator_895_high_power:
             post_1 = _import_stl("POST_TR2.stl", (180, 0, 0), (0, 68.55, 37.34132+height))
             mesh.addMesh(post_1)
 
-            post_adapter = _import_stl("RA90.stl", (xrot, yrot, zrot), (xoff, yoff, zoff+height))
+            post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30, 37.34132+height))
             mesh.addMesh(post_adapter)
+
+            post_2 = _import_stl("POST_TR2.stl", (xrot, yrot, zrot), (xoff, yoff, zoff+height))
+            mesh.addMesh(post_2)
             # post_mesh = 0
             # post_adapter = 0
 
