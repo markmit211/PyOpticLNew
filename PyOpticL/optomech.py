@@ -552,9 +552,6 @@ class isolator_895_high_power:
 
         if not cage:
             _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
-        
-        ###### Temporary Drill Test ######
-        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(-16, 30, -12.7+height), rot_offset=(0, 0, 0))
 
     def execute(self, obj):
         height = obj.Height.Value
@@ -587,7 +584,7 @@ class isolator_895_high_power:
             post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30, 37.34132+height))
             mesh.addMesh(post_adapter)
 
-            post_2 = _import_stl("POST_TR3.stl", (90, 0, 0), (-16, 30, -12.7+height))
+            post_2 = _import_stl("POST_TR3.stl", (90, 0, 0), (-16, 30, -13.7+height))
             mesh.addMesh(post_2)
 
             mesh.Placement = obj.Mesh.Placement
