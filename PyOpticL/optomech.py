@@ -226,7 +226,7 @@ class drill_test:
 
         part = _custom_cylinder(dia=12.7, dz=1, x=0, y=0, z=0)
 
-        part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'], head_dz=bolt_14_20['head_dz'], x=0, y=0, z=-12.7))
+        part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'], head_dz=bolt_14_20['head_dz'], x=0, y=0, z=-12.7), dir=(0,0,1))
 
         obj.Shape = part
 
