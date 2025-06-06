@@ -553,7 +553,7 @@ class isolator_895_high_power:
             _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
         
         ###### Temporary Drill Test ######
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(xoff, yoff, zoff+height), rot_offset=(xrot, yrot, zrot))
+        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(-16, 30, -12.7+height), rot_offset=(0, 0, 0))
 
     def execute(self, obj):
         height = obj.Height.Value
