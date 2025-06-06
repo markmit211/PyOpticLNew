@@ -226,7 +226,8 @@ class drill_test:
 
         part = _custom_cylinder(dia=12.7, dz=1, x=0, y=0, z=0)
 
-        part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'], head_dz=bolt_14_20['head_dz'], x=0, y=0, z=-12.7, dir=(0,0,1)))
+        part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
+                                          head_dz=bolt_14_20['head_dz'], x=0, y=0, z=-12.7, dir=(0,0,1)))
 
         obj.Shape = part
 
@@ -553,7 +554,7 @@ class isolator_895_high_power:
             _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
         
         ###### Temporary Drill Test ######
-        _add_linked_object(obj, "drill_test", drill_test, pos_offset=(-16, 30, -12.7+height), rot_offset=(0, 0, 0))
+        # _add_linked_object(obj, "drill_test", drill_test, pos_offset=(-16, 30, -12.7+height), rot_offset=(0, 0, 0))
 
     def execute(self, obj):
         height = obj.Height.Value
@@ -593,6 +594,11 @@ class isolator_895_high_power:
             obj.Mesh = mesh
 
             part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.6, fillet=5)
+
+            part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30, z=-12.7))
+
+            part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
+                                          head_dz=bolt_14_20['head_dz'], x=-16, y=30, z=-25.4, dir=(0,0,1)))
 
         part.Placement = obj.Placement
         obj.DrillPart = part
