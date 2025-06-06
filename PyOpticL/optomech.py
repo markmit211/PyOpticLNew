@@ -521,7 +521,7 @@ class isolator_895_high_power:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), cage=False):
         adapter_args.setdefault("mount_hole_dy", 43)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -529,6 +529,7 @@ class isolator_895_high_power:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Height').Height = height
+        obj.addProperty('App::PropertyBool', 'Cage').Cage = cage
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['IO-3D-850-VLP']
@@ -536,16 +537,25 @@ class isolator_895_high_power:
         self.max_angle = 10
         self.max_width = 5
 
-        # _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
+        if not cage:
+            _add_linked_object(obj, "surface_adapter", surface_adapter, pos_offset=(0, 0, height-16.8402-5.2578), rot_offset=(0, 0, 0), **adapter_args)
 
     def execute(self, obj):
         height = obj.Height.Value
 
-        mesh = _import_stl("IO-5-895-HP.stl", (180, 0, 0), (54.102, 0, 0+height))
-        mesh.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh
+        if not obj.Cage:
+            mesh = _import_stl("IO-5-895-HP.stl", (0, 0, 0), (54.102, 0, 0+height))
+            mesh.Placement = obj.Mesh.Placement
+            obj.Mesh = mesh
 
-        part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.098, fillet=5)
+            part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.098, fillet=5)
+        
+        else:
+            mesh = _import_stl("IO-5-895-HP.stl", (180, 0, 0), (54.102, 0, 0+height))
+            mesh.Placement = obj.Mesh.Placement
+            obj.Mesh = mesh
+
+            part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.6, fillet=5)
 
         part.Placement = obj.Placement
         obj.DrillPart = part
