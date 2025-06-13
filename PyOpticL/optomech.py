@@ -354,7 +354,7 @@ class chromatic_rotation_stage:
         zoff = obj.zoff.Value
 
 
-        mesh = _import_stl("FBR-AH2.stl", (0, 0, 0), (xoff, 0+yoff, 0+zoff))
+        mesh = _import_stl("FBR-AH2.stl", (0, 0, 0), (0, 0, 0))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
 
