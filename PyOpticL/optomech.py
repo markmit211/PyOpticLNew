@@ -346,7 +346,7 @@ class chromatic_rotation_stage:
         self.part_numbers = ['RSP05']
         self.transmission = True
 
-        _add_linked_object(obj, "Surface Adapter", surface_adapter_for_chromatic, pos_offset=(xoff, 0, -13.97), rot_offset=(0, 0, 90*obj.Invert), **adapter_args)
+        _add_linked_object(obj, "Surface Adapter", surface_adapter_for_chromatic, pos_offset=(-3.5674, 0, -13.97), rot_offset=(0, 0, 90*obj.Invert), **adapter_args)
 
     def execute(self, obj):
         xoff = obj.xoff.Value
