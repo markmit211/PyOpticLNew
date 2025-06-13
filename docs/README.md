@@ -113,6 +113,16 @@
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
     
+### surface_adapter_for_chromatic
+  
+    Surface adapter for chromatic waveplate module  
+  
+    Args:  
+        drill (bool) : Whether baseplate mounting for this part should be drilled  
+        mount_hole_dy (float) : The spacing between the two mount holes of the adapter  
+        adapter_height (float) : The height of the suface adapter  
+        outer_thickness (float) : The thickness of the walls around the bolt holes  
+    
 ### chromatic_rotation_stage
   
     Rotation stage, model FBR-AH2  
