@@ -244,7 +244,7 @@ class surface_adapter_for_chromatic:
         outer_thickness (float) : The thickness of the walls around the bolt holes
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, mount_hole_dy=30, adapter_height=8, outer_thickness=2, tolerance=1):
+    def __init__(self, obj, drill=True, mount_hole_dy=26, adapter_height=8, outer_thickness=2, tolerance=1):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
@@ -286,32 +286,12 @@ class surface_adapter_for_chromatic:
                                              x=0, y=i*obj.MountHoleDistance.Value/2, z=0))
         obj.Shape = part
 
-        # part = _bounding_box(obj, self.drill_tolerance, 6) ################# Change to include new adjustment range (Completed)
         part = _custom_box(dx=dx+fillet_tolerance, dy=dy+fillet_tolerance, dz=dz+10, x=0, y=0, z=-dz, fillet=dx/2, dir=(0,0,1))
 
 
         for i in [-1, 1]:
             part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
                                               x=0, y=i*obj.MountHoleDistance.Value/2, z=0))
-
-        # part = _custom_box(dx=dx, dy=dy, dz=dz,
-        #                    x=0, y=0, z=0, dir=(0, 0, -1),
-        #                    fillet=5)
-        # part = part.cut(_custom_cylinder(dia=bolt_8_32['clear_dia'], dz=dz,
-        #                                  head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
-        #                                  x=0, y=0, z=-dz, dir=(0,0,1)))
-        # for i in [-1, 1]:
-        #     part = part.cut(_custom_cylinder(dia=bolt_8_32['clear_dia'], dz=dz,
-        #                                      head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
-        #                                      x=0, y=i*obj.MountHoleDistance.Value/2, z=0))
-        # obj.Shape = part
-
-        # part = _bounding_box(obj, self.drill_tolerance, 6)
-        # for i in [-1, 1]:
-        #     part = part.fuse(_custom_cylinder(dia=bolt_8_32['tap_dia'], dz=drill_depth,
-        #                                       x=0, y=i*obj.MountHoleDistance.Value/2, z=0))
-        
-
 
         part.Placement = obj.Placement
         obj.DrillPart = part
@@ -349,24 +329,10 @@ class chromatic_rotation_stage:
         _add_linked_object(obj, "Surface Adapter", surface_adapter_for_chromatic, pos_offset=(-3.5674, 0, -13.97), rot_offset=(0, 0, 90*obj.Invert), **adapter_args)
 
     def execute(self, obj):
-        xoff = obj.xoff.Value
-        yoff = obj.yoff.Value
-        zoff = obj.zoff.Value
-
 
         mesh = _import_stl("FBR-AH2.stl", (0, 0, 0), (0, 0, 0))
         mesh.Placement = obj.Mesh.Placement
         obj.Mesh = mesh
-
-        # x_off=-3.5662
-        # part = _custom_box(dx=12, dy=20, dz=1.6+0.1, x=x_off, y=0, z=-12.7+0.1, dir=(0,0,-1), fillet=1)
-
-        # part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=x_off, y=6.35, z=-14.3, dir=(0,0,-1)))
-        # part = part.fuse(_custom_cylinder(dia=3.18, dz=6, x=x_off, y=-6.35, z=-14.3, dir=(0,0,-1)))
-
-        # part.Placement = obj.Placement
-        # obj.DrillPart = part
-
 
 class km100pm_for_AOMO_3080_125: # Work in progress mount for AOM
     '''
