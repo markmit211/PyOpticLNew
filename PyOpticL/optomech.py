@@ -584,7 +584,7 @@ class isolator_895_high_power:
             post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348, height))
             mesh.addMesh(post_adapter)
 
-            post_2 = _import_stl("POST_TR3.stl", (90, 0, 0), (-16, 30+4.348, -13.7+height))
+            post_2 = _import_stl("POST_TR1_5.stl", (90, 0, 0), (-16, 30+4.348, -13.7+height))
             mesh.addMesh(post_2)
 
             mesh.Placement = obj.Mesh.Placement
