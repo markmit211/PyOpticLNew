@@ -590,7 +590,7 @@ class isolator_895_high_power:
             mesh.Placement = obj.Mesh.Placement
             obj.Mesh = mesh
 
-            part = _custom_box(dx=110, dy=40, dz=12.7, x=0, y=0, z=-22.6, fillet=5)
+            part = _custom_box(dx=110, dy=40, dz=12.7, x=0, y=0, z=-17.8, fillet=5)
 
             part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348, z=-12.7))
 
