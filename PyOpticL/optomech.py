@@ -578,13 +578,13 @@ class isolator_895_high_power:
             # mount_adapter = _import_stl("TRB1-90.stl", (180, 0, 0), (0, 17.75, 37.34132+height))
             # mesh.addMesh(mount_adapter)
 
-            post_1 = _import_stl("POST_TR1.stl", (180, 0, 0), (0, 43.15+yoff, height))
+            post_1 = _import_stl("POST_TR1.stl", (180, 0, 0), (0, 43.15+4.348, height))
             mesh.addMesh(post_1)
 
-            post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+yoff, height))
+            post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348, height))
             mesh.addMesh(post_adapter)
 
-            post_2 = _import_stl("POST_TR3.stl", (90, 0, 0), (-16, 30+yoff, -13.7+height))
+            post_2 = _import_stl("POST_TR3.stl", (90, 0, 0), (-16, 30+4.348, -13.7+height))
             mesh.addMesh(post_2)
 
             mesh.Placement = obj.Mesh.Placement
@@ -592,10 +592,10 @@ class isolator_895_high_power:
 
             part = _custom_box(dx=110, dy=36, dz=12.7, x=0, y=0, z=-22.6, fillet=5)
 
-            part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30, z=-12.7))
+            part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348, z=-12.7))
 
             part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
-                                          head_dz=bolt_14_20['head_dz'], x=-16, y=30, z=-25.4, dir=(0,0,1)))
+                                          head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348, z=-25.4, dir=(0,0,1)))
             
             # mesh = _import_stl("IO-5-895-HP.stl", (180, 0, 0), (54.102, 0, 0+height))
 
