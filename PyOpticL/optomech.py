@@ -244,7 +244,7 @@ class surface_adapter_for_chromatic:
         outer_thickness (float) : The thickness of the walls around the bolt holes
     '''
     type = 'Part::FeaturePython'
-    def __init__(self, obj, drill=True, mount_hole_dy=20, adapter_height=8, outer_thickness=2, tolerance=1):
+    def __init__(self, obj, drill=True, mount_hole_dy=30, adapter_height=8, outer_thickness=2, tolerance=1):
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
 
@@ -274,11 +274,11 @@ class surface_adapter_for_chromatic:
         xoff = -3.5662
 
         part = part.cut(_custom_cylinder(dia=3.18, dz=dz,
-                                        head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
-                                        x=xoff, y=6.35, z=-dz, dir=(0,0,1)))
+                                        x=0, y=6.35, z=-dz, dir=(0,0,1)))
         part = part.cut(_custom_cylinder(dia=3.18, dz=dz,
-                                        head_dia=bolt_8_32['head_dia'], head_dz=bolt_8_32['head_dz'],
-                                        x=xoff, y=-6.35, z=-dz, dir=(0,0,1)))
+                                        x=0, y=-6.35, z=-dz, dir=(0,0,1)))
+        
+        part = part.cut(_custom_box(dx=12, dy=20, dz=0.33, x=0, y=0, z=0, dir=(0,0,-1), fillet=1))
 
         for i in [-1, 1]:
             part = part.cut(_custom_cylinder(dia=bolt_8_32['clear_dia'], dz=dz,
