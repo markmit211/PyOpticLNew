@@ -278,7 +278,7 @@ class surface_adapter_for_chromatic:
         part = part.cut(_custom_cylinder(dia=3.18, dz=dz,
                                         x=0, y=-6.35, z=-dz, dir=(0,0,1)))
         
-        part = part.cut(_custom_box(dx=12, dy=20, dz=0.33, x=0, y=0, z=0, dir=(0,0,-1), fillet=1))
+        part = part.cut(_custom_box(dx=14, dy=20, dz=0.33, x=0, y=0, z=0, dir=(0,0,-1), fillet=1))
 
         for i in [-1, 1]:
             part = part.cut(_custom_cylinder(dia=bolt_8_32['clear_dia'], dz=dz,
@@ -346,7 +346,7 @@ class chromatic_rotation_stage:
         self.part_numbers = ['RSP05']
         self.transmission = True
 
-        _add_linked_object(obj, "Surface Adapter", surface_adapter_for_chromatic, pos_offset=(1.397, 0, -13.97), rot_offset=(0, 0, 90*obj.Invert), **adapter_args)
+        _add_linked_object(obj, "Surface Adapter", surface_adapter_for_chromatic, pos_offset=(xoff, 0, -13.97), rot_offset=(0, 0, 90*obj.Invert), **adapter_args)
 
     def execute(self, obj):
         xoff = obj.xoff.Value
