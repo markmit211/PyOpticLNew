@@ -265,6 +265,9 @@
         mount_hole_dy (float) : The spacing between the two mount holes of the adapter  
         adapter_height (float) : The height of the suface adapter  
         outer_thickness (float) : The thickness of the walls around the bolt holes  
+        adjust (bool) : Whether mounted part movement should be allowed  
+        adjust_dist (float) : Amount mounted part may move in millimeters  
+        tolerance : Space between surface adapter and baseplate cutout in millimeters  
     
 ### skate_mount
   
