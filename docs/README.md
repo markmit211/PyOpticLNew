@@ -122,6 +122,7 @@
         mount_hole_dy (float) : The spacing between the two mount holes of the adapter  
         adapter_height (float) : The height of the suface adapter  
         outer_thickness (float) : The thickness of the walls around the bolt holes  
+        tolerance (float) : Space between adapter and baseplate cutout in millimeters  
     
 ### chromatic_rotation_stage
   
@@ -142,6 +143,8 @@
     Args:  
         drill (bool) : Whether baseplate mounting for this part should be drilled  
         side_length (float) : The side length of the cube  
+        cage (bool) : Whether the isolator should be mounted using a side post cage system  
+        or not (default set to False to indicate mounting directly to baseplate)  
     
 ### fiberport_12mm
   
