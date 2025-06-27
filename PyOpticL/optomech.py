@@ -1033,7 +1033,7 @@ class isolator_895:
             obj.Mesh = mesh
         
         else:
-            mesh = _import_stl("I8953D_Isolator.stl", (90, 90, 90), (0, 0, height))
+            mesh = _import_stl("I8953D_Isolator.stl", (90, 270, 90), (0, 0, height))
 
             post_1 = _import_stl("POST_TR1.stl", (180, 0, 0), (0, 43.15+4.348, height))
             mesh.addMesh(post_1)
