@@ -1028,36 +1028,55 @@ class isolator_895:
     # this defines the component body and drilling
     def execute(self, obj):
         height = obj.Height.Value
-        m_off = 0
-        if obj.Mirror:
-            m_off = 180
-
         if not obj.Cage:
             mesh = _import_stl("I8953D_Isolator.stl", (90, 0, 90), (0, 0, height))
             mesh.Placement = obj.Mesh.Placement
             obj.Mesh = mesh
         
         else:
-            mesh = _import_stl("I8953D_Isolator.stl", (90, 270+m_off, 90), (0, 0, height))
+            if not obj.Mirror:
+                mesh = _import_stl("I8953D_Isolator.stl", (90, 270, 90), (0, 0, height))
 
-            post_1 = _import_stl("POST_TR1.stl", (180, 0+m_off, 0), (0, 43.15+4.348-5.257782, height))
-            mesh.addMesh(post_1)
+                post_1 = _import_stl("POST_TR1.stl", (180, 0, 0), (0, 43.15+4.348-5.257782, height))
+                mesh.addMesh(post_1)
 
-            post_adapter = _import_stl("RA90.stl", (0, 0+m_off, 0), (-8, 30+4.348-5.257782, height))
-            mesh.addMesh(post_adapter)
+                post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348-5.257782, height))
+                mesh.addMesh(post_adapter)
 
-            post_2 = _import_stl("POST_TR1_5.stl", (90, 0+m_off, 0), (-16, 30+4.348-5.257782, -13.7+height))
-            mesh.addMesh(post_2)
+                post_2 = _import_stl("POST_TR1_5.stl", (90, 0, 0), (-16, 30+4.348-5.257782, -13.7+height))
+                mesh.addMesh(post_2)
 
-            mesh.Placement = obj.Mesh.Placement
-            obj.Mesh = mesh
+                mesh.Placement = obj.Mesh.Placement
+                obj.Mesh = mesh
 
-            part = _custom_box(dx=15, dy=30, dz=12.7, x=0, y=0, z=-14.3, fillet=5)
+                part = _custom_box(dx=15, dy=30, dz=12.7, x=0, y=0, z=-14.3, fillet=5)
 
-            part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782, z=-12.7))
+                part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782, z=-12.7))
 
-            part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
-                                          head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348-5.257782, z=-25.4, dir=(0,0,1)))
+                part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
+                                            head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348-5.257782, z=-25.4, dir=(0,0,1)))
+            else:
+                mesh = _import_stl("I8953D_Isolator.stl", (90, 90, 90), (0, 0, height))
+
+                post_1 = _import_stl("POST_TR1.stl", (0, 0, 0), (0, 43.15+4.348-5.257782, height))
+                mesh.addMesh(post_1)
+
+                post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348-5.257782, height))
+                mesh.addMesh(post_adapter)
+
+                post_2 = _import_stl("POST_TR1_5.stl", (90, 0, 0), (-16, 30+4.348-5.257782, -13.7+height))
+                mesh.addMesh(post_2)
+
+                mesh.Placement = obj.Mesh.Placement
+                obj.Mesh = mesh
+
+                part = _custom_box(dx=15, dy=30, dz=12.7, x=0, y=0, z=-14.3, fillet=5)
+
+                part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782, z=-12.7))
+
+                part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
+                                            head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348-5.257782, z=-25.4, dir=(0,0,1)))
+
 
             part.Placement = obj.Placement
             obj.DrillPart = part
