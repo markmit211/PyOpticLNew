@@ -1005,7 +1005,7 @@ class isolator_895:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), cage=False):
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), cage=False, mirror=False):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -1014,6 +1014,7 @@ class isolator_895:
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Height').Height = height
         obj.addProperty('App::PropertyBool', 'Cage').Cage = cage
+        obj.addProperty('App::PropertyBool', 'Mirror').Mirror = mirror
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['IO-3D-850-VLP']
@@ -1027,6 +1028,9 @@ class isolator_895:
     # this defines the component body and drilling
     def execute(self, obj):
         height = obj.Height.Value
+        m_off = 0
+        if obj.Mirror:
+            m_off = 180
 
         if not obj.Cage:
             mesh = _import_stl("I8953D_Isolator.stl", (90, 0, 90), (0, 0, height))
@@ -1034,15 +1038,15 @@ class isolator_895:
             obj.Mesh = mesh
         
         else:
-            mesh = _import_stl("I8953D_Isolator.stl", (90, 270, 90), (0, 0, height))
+            mesh = _import_stl("I8953D_Isolator.stl", (90, 270+m_off, 90), (0, 0, height))
 
-            post_1 = _import_stl("POST_TR1.stl", (180, 0, 0), (0, 43.15+4.348-5.257782, height))
+            post_1 = _import_stl("POST_TR1.stl", (180, 0+m_off, 0), (0, 43.15+4.348-5.257782, height))
             mesh.addMesh(post_1)
 
-            post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348-5.257782, height))
+            post_adapter = _import_stl("RA90.stl", (0, 0+m_off, 0), (-8, 30+4.348-5.257782, height))
             mesh.addMesh(post_adapter)
 
-            post_2 = _import_stl("POST_TR1_5.stl", (90, 0, 0), (-16, 30+4.348-5.257782, -13.7+height))
+            post_2 = _import_stl("POST_TR1_5.stl", (90, 0+m_off, 0), (-16, 30+4.348-5.257782, -13.7+height))
             mesh.addMesh(post_2)
 
             mesh.Placement = obj.Mesh.Placement
