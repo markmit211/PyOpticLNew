@@ -1005,7 +1005,7 @@ class isolator_895:
         side_length (float) : The side length of the cube
     '''
     type = 'Mesh::FeaturePython'
-    def __init__(self, obj, drill=True, height=0, adapter_args=dict()):
+    def __init__(self, obj, drill=True, height=0, adapter_args=dict(), cage=False):
         adapter_args.setdefault("mount_hole_dy", 30)
         obj.Proxy = self
         ViewProvider(obj.ViewObject)
@@ -1013,6 +1013,7 @@ class isolator_895:
         obj.addProperty('App::PropertyBool', 'Drill').Drill = drill
         obj.addProperty('Part::PropertyPartShape', 'DrillPart')
         obj.addProperty('App::PropertyLength', 'Height').Height = height
+        obj.addProperty('App::PropertyBool', 'Cage').Cage = cage
 
         obj.ViewObject.ShapeColor = misc_color
         self.part_numbers = ['IO-3D-850-VLP']
@@ -1025,10 +1026,39 @@ class isolator_895:
     # this defines the component body and drilling
     def execute(self, obj):
         height = obj.Height.Value
-        # Driver mesh import:
-        mesh = _import_stl("I8953D_Isolator.stl", (90, 0, 90), (0, 0, 0+height))
-        mesh.Placement = obj.Mesh.Placement
-        obj.Mesh = mesh
+
+        if not obj.Cage:
+            mesh = _import_stl("I8953D_Isolator.stl", (90, 0, 90), (0, 0, height))
+            mesh.Placement = obj.Mesh.Placement
+            obj.Mesh = mesh
+        
+        else:
+            mesh = _import_stl("I8953D_Isolator.stl", (180, 0, 90), (0, 0, height))
+
+            post_1 = _import_stl("POST_TR1.stl", (180, 0, 0), (0, 43.15+4.348, height))
+            mesh.addMesh(post_1)
+
+            post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348, height))
+            mesh.addMesh(post_adapter)
+
+            post_2 = _import_stl("POST_TR1_5.stl", (90, 0, 0), (-16, 30+4.348, -13.7+height))
+            mesh.addMesh(post_2)
+
+            mesh.Placement = obj.Mesh.Placement
+            obj.Mesh = mesh
+
+            part = _custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348, z=-12.7)
+
+            part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
+                                          head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348, z=-25.4, dir=(0,0,1)))
+
+            part.Placement = obj.Placement
+            obj.DrillPart = part
+
+        # # Driver mesh import:
+        # mesh = _import_stl("I8953D_Isolator.stl", (90, 0, 90), (0, 0, 0+height))
+        # mesh.Placement = obj.Mesh.Placement
+        # obj.Mesh = mesh
 
 
 
