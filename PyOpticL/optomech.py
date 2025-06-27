@@ -1048,7 +1048,9 @@ class isolator_895:
             mesh.Placement = obj.Mesh.Placement
             obj.Mesh = mesh
 
-            part = _custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782, z=-12.7)
+            part = _custom_box(dx=10, dy=40, dz=12.7, x=0, y=0, z=-14.3, fillet=5)
+
+            part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782, z=-12.7))
 
             part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
                                           head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348-5.257782, z=-25.4, dir=(0,0,1)))
