@@ -1048,7 +1048,7 @@ class isolator_895:
             mesh.Placement = obj.Mesh.Placement
             obj.Mesh = mesh
 
-            part = _custom_box(dx=20, dy=40, dz=12.7, x=0, y=0, z=-14.3, fillet=5)
+            part = _custom_box(dx=15, dy=30, dz=12.7, x=0, y=0, z=-14.3, fillet=5)
 
             part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782, z=-12.7))
 
