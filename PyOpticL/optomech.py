@@ -1061,10 +1061,10 @@ class isolator_895:
                 post_1 = _import_stl("POST_TR1.stl", (0, 0, 0), (0, 43.15+4.348-5.257782-84.480438, height))
                 mesh.addMesh(post_1)
 
-                post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348-5.257782-42.4, height))
+                post_adapter = _import_stl("RA90.stl", (0, 0, 0), (-8, 30+4.348-5.257782-42.4-15.75, height))
                 mesh.addMesh(post_adapter)
 
-                post_2 = _import_stl("POST_TR1_5.stl", (90, 0, 0), (-16, 30+4.348-5.257782-42.4, -13.7+height))
+                post_2 = _import_stl("POST_TR1_5.stl", (90, 0, 0), (-16, 30+4.348-5.257782-42.4-15.75, -13.7+height))
                 mesh.addMesh(post_2)
 
                 mesh.Placement = obj.Mesh.Placement
@@ -1072,10 +1072,10 @@ class isolator_895:
 
                 part = _custom_box(dx=15, dy=30, dz=12.7, x=0, y=0, z=-14.3, fillet=5)
 
-                part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782-42.4, z=-12.7))
+                part = part.fuse(_custom_cylinder(dia=12.7, dz=1, x=-16, y=30+4.348-5.257782-42.4-15.75, z=-12.7))
 
                 part = part.fuse(_custom_cylinder(dia=bolt_14_20['clear_dia'], dz=12.7, head_dia=bolt_14_20['head_dia'],
-                                            head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348-5.257782-42.4, z=-25.4, dir=(0,0,1)))
+                                            head_dz=bolt_14_20['head_dz'], x=-16, y=30+4.348-5.257782-42.4-15.75, z=-25.4, dir=(0,0,1)))
 
 
             part.Placement = obj.Placement
